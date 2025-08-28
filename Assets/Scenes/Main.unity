@@ -1037,8 +1037,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   moveInput: {x: 0, y: 0}
-  jumpForce: 7
-  speed: 11
+  jumpForce: 6.5
+  speed: 12
   isGrounded: 0
   groundCheckRadius: 0.2
 --- !u!70 &1363307020
