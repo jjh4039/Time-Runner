@@ -4,7 +4,6 @@ using System.Collections;
 
 public class PlayerLight : MonoBehaviour
 {
-
     private Light2D light;
 
     void Start()
@@ -17,12 +16,12 @@ public class PlayerLight : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            light.intensity += 0.02f;
+            light.intensity += 0.015f;
             yield return new WaitForSeconds(0.01f);
         }
         for (int i = 0; i < 100; i++)
         {
-            light.intensity -= 0.02f;
+            light.intensity -= 0.015f;
             yield return new WaitForSeconds(0.01f);
         }
         StartCoroutine("OnOff");
