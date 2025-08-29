@@ -32,27 +32,28 @@ public class GameManager : MonoBehaviour
         switch (index)
         {
             case 0:
-                upTime = 20;
+                upTime = 4.5f;
                 break;
             case 1:
-                upTime = 30;
+                upTime = 5f;
                 break;
             default:
                 upTime = 0;
                 break;
         }
 
-        timeText.color = Color.softRed;
+        timeText.color = Color.white;
         for (int i = 20; i > 0; i--)
         {
             GameManager.instance.timeRemaining += upTime / 20;
             yield return new WaitForSeconds(0.02f);
         }
-        timeText.color = Color.white;
+        timeText.color = Color.softRed;
     }
 
     void Guide(int index)
     {
+
         switch (index)
         {
             case 0:
@@ -71,11 +72,11 @@ public class GameManager : MonoBehaviour
     IEnumerator GuideAlpha()
     {
         guideTextAlpha.alpha = 1;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.3f);
 
         for (int i = 50; i > 0; i--)
         {
-            guideTextAlpha.alpha -= 0.02f;
+            guideTextAlpha.alpha -= 0.03f;
             yield return new WaitForSeconds(0.01f);
         }
     }
