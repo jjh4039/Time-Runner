@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        GameManager.instance.password.StartCoroutine("CheckPassword");
+
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -95,6 +97,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void PasswordInput(InputAction.CallbackContext context)
+    {
+        if (context.performed && GameManager.instance.password.isPasswordinput == true)
+        {
+            string keyName = context.control.name.Replace("Numpad", "").Replace("Keyboard", "");
+            int number = int.Parse(keyName);
+
+            if (GameManager.instance.password.myPasswordText.text.Length < 4)
+            {
+                GameManager.instance.password.myPasswordText.text += number.ToString();
+            }
+        }
+    }
     void Update()
     {
         if (joint.enabled)

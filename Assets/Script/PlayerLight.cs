@@ -4,11 +4,11 @@ using System.Collections;
 
 public class PlayerLight : MonoBehaviour
 {
-    private Light2D light;
+    private Light2D light2d;
 
     void Start()
     {
-        light = GetComponent<Light2D>();
+        light2d = GetComponent<Light2D>();
         StartCoroutine("OnOff");
     }
 
@@ -16,12 +16,12 @@ public class PlayerLight : MonoBehaviour
     {
         for (int i = 0; i < 100; i++)
         {
-            light.intensity += 0.015f;
+            light2d.intensity += 0.015f;
             yield return new WaitForSeconds(0.01f);
         }
         for (int i = 0; i < 100; i++)
         {
-            light.intensity -= 0.015f;
+            light2d.intensity -= 0.015f;
             yield return new WaitForSeconds(0.01f);
         }
         StartCoroutine("OnOff");

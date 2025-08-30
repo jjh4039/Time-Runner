@@ -9,11 +9,14 @@ public class GameManager : MonoBehaviour
     static public GameManager instance;
     public float timeRemaining = 5f;
 
+    [Header("Script")]
+    public Password password;
+
+    [Header("Time & UI")]
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI guideText;
     public TextMeshProUGUI subGuideText;
     public CanvasGroup guideTextAlpha;
-
     public GameObject signPrefab;
     public RectTransform rectParent;
 
