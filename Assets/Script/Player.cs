@@ -15,10 +15,11 @@ public class Player : MonoBehaviour
     public DistanceJoint2D joint;
 
     public Vector2 moveInput;
-    public float jumpForce = 5f;
+    public float jumpForce;
     public float speed;
     public bool isGrounded;
-    public float groundCheckRadius = 0.2f;
+    public float groundCheckRadius;
+    public Anchor connectedAnchor;
 
 
     void Awake()
@@ -42,18 +43,22 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded)
-        {
-            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
-        }
-
         if (joint.enabled)
         {
             // LineRenderer와 DistanceJoint2D를 비활성화하여 와이어 해제
             lineRenderer.enabled = false;
             joint.enabled = false;
+            rigid.gravityScale = 2.5f;
 
-            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f,rigid.linearVelocity.y);
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f, rigid.linearVelocity.y);
+            connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
+        }
+        else
+        {
+            if (context.performed && isGrounded)
+            {
+                rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
+            }
         }
     }
 
@@ -71,19 +76,21 @@ public class Player : MonoBehaviour
             // 만약 클릭한 오브젝트가 'GrapplePoint' 태그를 가지고 있다면
             if (hit.collider != null && hit.collider.CompareTag("GrapplePoint"))
             {
-                Debug.Log("find!");
+                connectedAnchor = hit.collider.GetComponent<Anchor>();
+                connectedAnchor.isWire = true; // 와이어 light 및 회전 설정
+                rigid.gravityScale = 6f; // 와이어 연결 시 중력 증가
 
-                rigid.linearVelocity = rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 2f, 0);
+                rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
                 rigid.angularVelocity = 0f;
                 // 조인트 활성화 및 연결
                 joint.enabled = true;
-                joint.connectedAnchor = hit.point; // 클릭한 지점을 연결점으로 설정
-                joint.distance = Vector2.Distance(transform.position, hit.point); // 초기 와이어 길이 설정
+                joint.connectedAnchor = hit.collider.transform.position;  // 클릭한 지점을 연결점으로 설정
+                joint.distance = Vector2.Distance(transform.position, hit.collider.transform.position); // 초기 와이어 길이 설정
 
                 // 라인렌더러 활성화 및 시작점, 끝점 설정
                 lineRenderer.enabled = true;
                 lineRenderer.SetPosition(0, transform.position); // 와이어 시작점 (플레이어)
-                lineRenderer.SetPosition(1, hit.point); // 와이어 끝점 (클릭한 지점)
+                lineRenderer.SetPosition(1, hit.collider.transform.position); // 와이어 끝점 (클릭한 지점)
             }
         }
     }
@@ -93,15 +100,20 @@ public class Player : MonoBehaviour
         if (joint.enabled)
         {
             // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
-            lineRenderer.SetPosition(0, transform.position);
-
-            GetComponent<Rigidbody2D>().AddForce(transform.up * -10f);
-            GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
+            lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y + 0.2f));
         }
     }
 
     void FixedUpdate()
     {
+        // 와이어 액션
+        if (joint.enabled)
+        {
+            GetComponent<Rigidbody2D>().AddForce(transform.up * -20f);
+            GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
+        }
+
+        // 기초 이동 (비와이어 상태)
         if (!joint.enabled) 
         { 
             float horizontalMovement = moveInput.x * speed * Time.deltaTime;
@@ -109,7 +121,13 @@ public class Player : MonoBehaviour
             transform.position = newPosition;
             rigid.linearVelocity = new Vector2(horizontalMovement, rigid.linearVelocity.y);
         }
+
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (isGrounded && rigid.gravityScale != 2f)
+        {
+            rigid.gravityScale = 2f;
+        }
     }
 
     void LateUpdate()

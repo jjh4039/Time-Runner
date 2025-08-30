@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
             case 1:
                 upTime = 5f;
                 break;
+            case 2:
+                upTime = 6f;
+                break;
             default:
                 upTime = 0;
                 break;
@@ -70,6 +73,10 @@ public class GameManager : MonoBehaviour
             case 1:
                 guideText.text = "Triple Jump";
                 break;
+            case 2:
+                guideText.text = "Grapple Hook";
+                break;
+
             default:
                 guideText.text = "";
                 break;
