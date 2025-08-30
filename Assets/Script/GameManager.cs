@@ -48,13 +48,15 @@ public class GameManager : MonoBehaviour
             case 2:
                 upTime = 6f;
                 break;
+            case 3:
+                upTime = 12f;
+                password.StartCoroutine("CheckPassword");
+                break;
             default:
                 upTime = 0;
                 break;
         }
         subGuideText.text = "+" + upTime.ToString("F1") + "s";
-
-
 
         timeText.color = Color.softRed;
         for (int i = 20; i > 0; i--)
@@ -79,7 +81,9 @@ public class GameManager : MonoBehaviour
             case 2:
                 guideText.text = "Grapple Hook";
                 break;
-
+            case 3:
+                guideText.text = "Password";
+                break;
             default:
                 guideText.text = "";
                 break;

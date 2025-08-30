@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,8 +25,6 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        GameManager.instance.password.StartCoroutine("CheckPassword");
-
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -80,7 +79,7 @@ public class Player : MonoBehaviour
             {
                 connectedAnchor = hit.collider.GetComponent<Anchor>();
                 connectedAnchor.isWire = true; // 와이어 light 및 회전 설정
-                rigid.gravityScale = 6f; // 와이어 연결 시 중력 증가
+                rigid.gravityScale = 10f; // 와이어 연결 시 중력 증가
 
                 rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
                 rigid.angularVelocity = 0f;
@@ -99,14 +98,33 @@ public class Player : MonoBehaviour
 
     public void PasswordInput(InputAction.CallbackContext context)
     {
-        if (context.performed && GameManager.instance.password.isPasswordinput == true)
+        if (context.performed && GameManager.instance.password.isPasswordinput)
         {
-            string keyName = context.control.name.Replace("Numpad", "").Replace("Keyboard", "");
-            int number = int.Parse(keyName);
+            string keyName = context.control.name;
 
-            if (GameManager.instance.password.myPasswordText.text.Length < 4)
+            // TryParse를 사용해 문자열을 숫자로 변환을 시도합니다.
+            // 변환에 성공하면 'number' 변수에 값이 할당되고,
+            // 실패하면 if 문 내부 코드가 실행되지 않습니다.
+            int number;
+            if (int.TryParse(keyName, out number))
             {
-                GameManager.instance.password.myPasswordText.text += number.ToString();
+                if (GameManager.instance.password.myPasswordText.text.Length < 4)
+                {
+                    GameManager.instance.password.myPasswordText.text += number.ToString();
+                }
+            }
+            else
+            {
+                // Numpad0 ~ Numpad9와 같이 숫자가 포함된 이름인 경우 처리
+                // 문자열 끝의 숫자만 추출하여 변환을 시도합니다.
+                string numericPart = new string(keyName.Where(char.IsDigit).ToArray());
+                if (int.TryParse(numericPart, out number))
+                {
+                    if (GameManager.instance.password.myPasswordText.text.Length < 4)
+                    {
+                        GameManager.instance.password.myPasswordText.text += number.ToString();
+                    }
+                }
             }
         }
     }
@@ -124,7 +142,7 @@ public class Player : MonoBehaviour
         // 와이어 액션
         if (joint.enabled)
         {
-            GetComponent<Rigidbody2D>().AddForce(transform.up * -20f);
+            GetComponent<Rigidbody2D>().AddForce(transform.up * -5f);
             GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
         }
 
