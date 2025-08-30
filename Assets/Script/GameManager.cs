@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI guideText;
+    public TextMeshProUGUI subGuideText;
     public CanvasGroup guideTextAlpha;
+
+    public GameObject signPrefab;
+    public RectTransform rectParent;
 
     void Awake()
     {
@@ -28,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         float upTime = 0;
         Guide(index);
+        StartCoroutine("Sign");
 
         switch (index)
         {
@@ -41,14 +46,17 @@ public class GameManager : MonoBehaviour
                 upTime = 0;
                 break;
         }
+        subGuideText.text = "+" + upTime.ToString("F1") + "s";
 
-        timeText.color = Color.white;
+
+
+        timeText.color = Color.softRed;
         for (int i = 20; i > 0; i--)
         {
             GameManager.instance.timeRemaining += upTime / 20;
             yield return new WaitForSeconds(0.02f);
         }
-        timeText.color = Color.softRed;
+        timeText.color = Color.white;
     }
 
     void Guide(int index)
@@ -68,11 +76,22 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine("GuideAlpha");
     }
+    IEnumerator Sign()
+    {
+        Instantiate(signPrefab, Vector2.zero, Quaternion.identity).transform.SetParent(rectParent, false);
+        yield return new WaitForSeconds(0.01f);
+    }
 
     IEnumerator GuideAlpha()
     {
+        for (int i = 30; i > 0; i--)
+        {
+            guideTextAlpha.alpha += 0.05f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
         guideTextAlpha.alpha = 1;
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1f);
 
         for (int i = 50; i > 0; i--)
         {

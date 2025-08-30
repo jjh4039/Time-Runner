@@ -8,8 +8,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Rigidbody2D rigid;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
+    [HideInInspector] public Transform groundCheck; // 이중 점프 방지
+    [HideInInspector] public LayerMask groundLayer; // 땅 레이어 설정
+
+    public LineRenderer lineRenderer;
+    public DistanceJoint2D joint;
 
     public Vector2 moveInput;
     public float jumpForce = 5f;
@@ -23,11 +26,18 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+
+        // 와이어 관련
+        lineRenderer = GetComponent<LineRenderer>();
+        joint = GetComponent<DistanceJoint2D>();
+
+        lineRenderer.enabled = false;
+        joint.enabled = false;
     }
 
     public void OnMove(InputAction.CallbackContext context) 
     {
-        moveInput = context.ReadValue<Vector2>();
+        if (joint.enabled == false) moveInput = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -36,14 +46,70 @@ public class Player : MonoBehaviour
         {
             rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
         }
+
+        if (joint.enabled)
+        {
+            // LineRenderer와 DistanceJoint2D를 비활성화하여 와이어 해제
+            lineRenderer.enabled = false;
+            joint.enabled = false;
+
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f,rigid.linearVelocity.y);
+        }
+    }
+
+    public void OnWire(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Wire action performed");
+            // 마우스 위치를 월드 좌표로 변환
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+            // Raycast를 사용하여 클릭한 위치에 있는 오브젝트 찾기
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+            // 만약 클릭한 오브젝트가 'GrapplePoint' 태그를 가지고 있다면
+            if (hit.collider != null && hit.collider.CompareTag("GrapplePoint"))
+            {
+                Debug.Log("find!");
+
+                rigid.linearVelocity = rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 2f, 0);
+                rigid.angularVelocity = 0f;
+                // 조인트 활성화 및 연결
+                joint.enabled = true;
+                joint.connectedAnchor = hit.point; // 클릭한 지점을 연결점으로 설정
+                joint.distance = Vector2.Distance(transform.position, hit.point); // 초기 와이어 길이 설정
+
+                // 라인렌더러 활성화 및 시작점, 끝점 설정
+                lineRenderer.enabled = true;
+                lineRenderer.SetPosition(0, transform.position); // 와이어 시작점 (플레이어)
+                lineRenderer.SetPosition(1, hit.point); // 와이어 끝점 (클릭한 지점)
+            }
+        }
     }
 
     void Update()
     {
-        float horizontalMovement = moveInput.x * speed * Time.deltaTime;
-        Vector3 newPosition = transform.position + new Vector3(horizontalMovement, 0, 0);
-        transform.position = newPosition;
-        rigid.linearVelocity = new Vector2(horizontalMovement, rigid.linearVelocity.y);
+        if (joint.enabled)
+        {
+            // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
+            lineRenderer.SetPosition(0, transform.position);
+
+            GetComponent<Rigidbody2D>().AddForce(transform.up * -10f);
+            GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!joint.enabled) 
+        { 
+            float horizontalMovement = moveInput.x * speed * Time.deltaTime;
+            Vector3 newPosition = transform.position + new Vector3(horizontalMovement, 0, 0);
+            transform.position = newPosition;
+            rigid.linearVelocity = new Vector2(horizontalMovement, rigid.linearVelocity.y);
+        }
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     void LateUpdate()
@@ -55,11 +121,5 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.flipX = moveInput.x < 0;
         }
-    }
-
-    void FixedUpdate()
-    {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        
     }
 }

@@ -28,6 +28,7 @@ TagManager:
   - Stage21
   - Stage22
   - Stage23
+  - GrapplePoint
   layers:
   - Default
   - TransparentFX
