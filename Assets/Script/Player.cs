@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+
         if (joint.enabled)
         {
             // LineRenderer와 DistanceJoint2D를 비활성화하여 와이어 해제
@@ -98,6 +99,9 @@ public class Player : MonoBehaviour
 
     public void PasswordInput(InputAction.CallbackContext context)
     {
+        // test
+        if (context.performed) GameManager.instance.StartCoroutine("TimeDown", 3f);
+
         if (context.performed && GameManager.instance.password.isPasswordinput)
         {
             string keyName = context.control.name;

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Script")]
     public Password password;
+    public DB db;
 
     [Header("Time & UI")]
     public TextMeshProUGUI timeText;
@@ -29,6 +30,21 @@ public class GameManager : MonoBehaviour
     {
         timeRemaining -= Time.deltaTime;
         timeText.text = timeRemaining.ToString("F1");
+    }
+
+    IEnumerator TimeDown(float downTime)
+    {
+        // 텍스트 생성 (Damage)
+
+
+        // 시간 감소
+        timeText.color = Color.red;
+        for (int i = 5; i > 0; i--)
+        {
+            GameManager.instance.timeRemaining -= downTime / 5;
+            yield return new WaitForSeconds(0.01f);
+        }
+        timeText.color = Color.white;
     }
 
     IEnumerator TimeUp(int index)

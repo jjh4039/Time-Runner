@@ -59,7 +59,17 @@ public class Password : MonoBehaviour
 
     IEnumerator FinalPassword()
     {
+        isPasswordinput = false; // 입력 중지
+
+        // 패스워드 미입력 시
+        while (myPasswordText.text.Length < 4)
+        {
+            myPasswordText.text += "0";
+        }
+
         int passwordAsInt;
+
+        // 기존 문 제거
         for (int i = 0; i < 8; i++)
         {
             if (door[i] != null)
