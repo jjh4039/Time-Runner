@@ -24313,8 +24313,8 @@ Transform:
   m_GameObject: {fileID: 2646945585453586901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.0362, y: 0, z: 0}
-  m_LocalScale: {x: 131.08452, y: 4.308469, z: 1}
+  m_LocalPosition: {x: 63.0362, y: -3.9273, z: 0}
+  m_LocalScale: {x: 131.08452, y: 12.163239, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5803461234856551413}
@@ -63702,8 +63702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f5f88991677ed44b37a6c05d4a8a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerNumber: 1
+  triggerNumber: 0
   boxCollider2D: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  respawnObject: {fileID: 0}
 --- !u!1 &7946479712960195541
 GameObject:
   m_ObjectHideFlags: 0

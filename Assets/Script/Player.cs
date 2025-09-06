@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +16,8 @@ public class Player : MonoBehaviour
 
     public LineRenderer lineRenderer;
     public DistanceJoint2D joint;
+
+    public Boolean isMove = true;
 
     public Vector2 moveInput;
     public float jumpForce;
@@ -39,7 +43,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context) 
     {
-        if (joint.enabled == false) moveInput = context.ReadValue<Vector2>();
+        if (joint.enabled == false && isMove == true) moveInput = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
