@@ -14,12 +14,13 @@ public class GameManager : MonoBehaviour
     public float timeRemaining;
 
     [Header("Script")]
-    public CinemachineCamera cine;
+    public CinemachineCamera cinemachine;
     public Player player;
     public Password password;
     public DB db;
 
     [Header("Time & UI")]
+    public CanvasGroup screenAlpha;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI guideText;

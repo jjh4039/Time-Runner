@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
@@ -38,30 +39,44 @@ public class Trigger : MonoBehaviour
     {
         switch (triggerNumber)
         {
-            case 0: // 문 검사 시작
+            case 0: // 비밀번호 검사 시작
                 GameManager.instance.password.StartCoroutine("FinalPassword");
                 gameObject.SetActive(false);
                 break;
-            case 1: // 리스폰 & 2초 감소
-                GameManager.instance.player.transform.position = respawnPoint.position;
-                GameManager.instance.cine.transform.position = new Vector3(GameManager.instance.player.transform.position.x, GameManager.instance.player.transform.position.y, -10);
-                GameManager.instance.StartCoroutine("TimeDown", 2f);
-                StartCoroutine("PlayerMoveStop", 0.1f);
+            case 1: // 리스폰 & 2초 감소 (리스폰, 낙사)
+                StartCoroutine("TriggerOne");  
+                break;
+            case 2: // 1초 감소 및 삭제 (비밀번호 실패)
+                GameManager.instance.StartCoroutine("TimeDown", 1f);
+                gameObject.SetActive(false);
                 break;
         }
     }
 
-    private void MoveCamera()
-    {
-
-    }
-
-    IEnumerator PlayerMoveStop(float time)
+    IEnumerator TriggerOne()
     {
         GameManager.instance.player.isMove = false;
+
+        for (int i = 0; i < 20; i++)
+        {
+            GameManager.instance.screenAlpha.alpha += 0.05f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        GameManager.instance.StartCoroutine("TimeDown", 2f);
         GameManager.instance.player.rigid.linearVelocity = Vector2.zero;
         GameManager.instance.player.moveInput = Vector2.zero;
-        yield return new WaitForSeconds(time);
+        GameManager.instance.player.transform.position = respawnPoint.position;
+        GameManager.instance.cinemachine.ForceCameraPosition(respawnPoint.position, Quaternion.identity);
+        GameManager.instance.screenAlpha.alpha = 1f;
+
+        for (int i = 0; i < 20; i++)
+        {
+            GameManager.instance.screenAlpha.alpha -= 0.05f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        GameManager.instance.screenAlpha.alpha = 0f;
         GameManager.instance.player.isMove = true;
     }
 }
