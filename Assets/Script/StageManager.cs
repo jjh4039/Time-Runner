@@ -41,7 +41,14 @@ public class StageManager : MonoBehaviour
     {
         // 스테이지 배열에서 무작위로 스테이지 선택
         int randomIndex = Random.Range(0, stagePrefabs.Length);
+
+        // 연속 같은 스테이지 방지 (구현 필요)
+
+        // 스테이지 생성
         GameObject newStage = Instantiate(stagePrefabs[randomIndex], nextSpawnPoint, Quaternion.identity);
+
+        // 최종 생성 스테이지 번호 전달
+        GameManager.stageNumber = randomIndex;
 
         // 생성된 스테이지에 고유한 태그를 붙여주기
         newStage.tag = "Stage" + stageCount;

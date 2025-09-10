@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-
+        // 와이어 상태에서는 와이어 해제 액션
         if (joint.enabled)
         {
             // LineRenderer와 DistanceJoint2D를 비활성화하여 와이어 해제
@@ -59,11 +59,14 @@ public class Player : MonoBehaviour
             rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f, rigid.linearVelocity.y);
             connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
         }
+
+        // 일반 점프 액션
         else
         {
             if (context.performed && isGrounded)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
+                GameManager.instance.db.jumpCount++;
             }
         }
     }
@@ -162,6 +165,7 @@ public class Player : MonoBehaviour
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
+        // 땅에 있을 때 중력 초과시 기본값 복귀
         if (isGrounded && rigid.gravityScale != 2f)
         {
             rigid.gravityScale = 2f;

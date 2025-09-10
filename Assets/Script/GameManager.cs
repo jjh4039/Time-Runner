@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     [Header("Main")]
     static public GameManager instance;
     static public int stageIndex;
+    static public int stageNumber;
     static public Color stageColor;
     public float timeRemaining;
+    public bool isPerfect;
 
     [Header("Script")]
     public CinemachineCamera cinemachine;
@@ -36,9 +38,9 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
+        isPerfect = false;
         stageIndex = 0;
         stageColor = new Color(1f, 0.5f, 0.5f); // Red
-
     }
 
     void Update()
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         float upTime = 0;
         Guide(index);
         StartCoroutine("Sign");
+        
 
         switch (index)
         {
@@ -109,7 +112,6 @@ public class GameManager : MonoBehaviour
                 titleText.text = "Only Run";
                 guideText.text = "오로지 달리세요";
                 keyGuideText.text = $"달리기 : [ <color=#{colorCode}>D</color> ]";
-
                 break;
             case 1:
                 titleText.text = "Triple Jump";
@@ -133,10 +135,17 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine("GuideAlpha");
     }
-    IEnumerator Sign()
+
+    // 판정검사
+    IEnumerator Sign() 
     {
-        Instantiate(signPrefab, Vector2.zero, Quaternion.identity).transform.SetParent(rectParent, false);
-        yield return new WaitForSeconds(0.01f);
+        if (isPerfect == true)
+        {
+            Instantiate(signPrefab, Vector2.zero, Quaternion.identity).transform.SetParent(rectParent, false);
+            db.continuePerfect++;
+            yield return new WaitForSeconds(0f);
+        }
+        isPerfect = true;
     }
 
     IEnumerator GuideAlpha()
