@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    public int[] nextLevelInt; // 각 스테이지 레벨에 도달하기 위한 스테이지 수
+    public int currentLevel; // 현재 플레이어 레벨
+
     public GameObject[] stagePrefabs;
     public Transform player; // 플레이어 오브젝트
     public float stageClearDistance; // 스테이지 끝에서 얼마나 떨어졌을 때 다음 스테이지를 생성할지
@@ -14,6 +17,8 @@ public class StageManager : MonoBehaviour
     {
         nextSpawnPoint = Vector3.zero;
         SpawnStage();
+
+        currentLevel = 0;
     }
 
     void Update()
@@ -39,7 +44,7 @@ public class StageManager : MonoBehaviour
 
     void SpawnStage()
     {
-        // 스테이지 배열에서 무작위로 스테이지 선택
+        
         int randomIndex = Random.Range(0, stagePrefabs.Length);
 
         // 연속 같은 스테이지 방지 (구현 필요)
