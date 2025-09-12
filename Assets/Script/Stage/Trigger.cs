@@ -37,7 +37,7 @@ public class Trigger : MonoBehaviour
         }
     }
 
-    private void trigger()
+    public void trigger()
     {
         switch (triggerNumber)
         {
@@ -53,6 +53,12 @@ public class Trigger : MonoBehaviour
                 GameManager.instance.StartCoroutine("TimeDown", 1f);
                 GameManager.instance.isPerfect = false;
                 gameObject.SetActive(false);
+                break;
+            case 3: // 1초 감소 (화살 피격)
+                GameManager.instance.StartCoroutine("TimeDown", 1f);
+                GameManager.instance.isPerfect = false;
+                break;
+            case 4: // 화살 스테이지 시작 
                 break;
         }
     }
