@@ -29,6 +29,7 @@ TagManager:
   - Stage22
   - Stage23
   - GrapplePoint
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX

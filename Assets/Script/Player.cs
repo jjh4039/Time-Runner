@@ -20,15 +20,19 @@ public class Player : MonoBehaviour
     public Boolean isMove = true;
 
     public Vector2 moveInput;
+    public float[] attackAmount;
     public float jumpForce;
     public float speed;
     public bool isGrounded;
+    public GameObject playerAttack;
+    public enum PlayerSpaceMode { jump, attack, both }
+    public PlayerSpaceMode playerSpaceMode;
     public float groundCheckRadius;
     public Anchor connectedAnchor;
 
 
     void Awake()
-    {
+    { 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -36,9 +40,11 @@ public class Player : MonoBehaviour
         // 와이어 관련
         lineRenderer = GetComponent<LineRenderer>();
         joint = GetComponent<DistanceJoint2D>();
-
         lineRenderer.enabled = false;
         joint.enabled = false;
+
+        // 공격 관련
+        attackAmount = new float[] { 0, 0, 0 };
     }
 
     public void OnMove(InputAction.CallbackContext context) 
@@ -48,6 +54,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        
         // 와이어 상태에서는 와이어 해제 액션
         if (joint.enabled)
         {
@@ -60,13 +67,37 @@ public class Player : MonoBehaviour
             connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
         }
 
-        // 일반 점프 액션
+        // 일반 점프 & 공격 액션
         else
         {
-            if (context.performed && isGrounded)
+            // 점프
+            if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
                 GameManager.instance.db.jumpCount++;
+            }
+
+            // 공격
+            if (context.performed && playerSpaceMode == PlayerSpaceMode.attack)
+            {
+                if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
+                {
+                    animator.SetInteger("Attack", 1);
+                    attackAmount[0] = 0.6f; // 공격 쿨타임 설정
+                }
+                else if (attackAmount[0] <= 0.15f && attackAmount[1] <= 0 && attackAmount[2] <= 0)
+                {
+                    animator.SetInteger("Attack", 2);
+                    attackAmount[0] = 0f;
+                    attackAmount[1] = 0.45f; // 공격 쿨타임 설정
+                }
+                else if (attackAmount[0] <= 0f && attackAmount[1] <= 0.20f && attackAmount[2] <= 0)
+                {
+                    animator.SetInteger("Attack", 3);
+                    attackAmount[0] = 0f;
+                    attackAmount[1] = 0f;
+                    attackAmount[2] = 0.7f; // 공격 쿨타임 설정
+                }
             }
         }
     }
@@ -147,6 +178,41 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // 공격 매커니즘
+        for (int i = 0; i < attackAmount.Length; i++)
+        {
+            if (attackAmount[i] >= 0)
+            {
+                attackAmount[i] -= Time.fixedDeltaTime;
+            }
+        }
+
+        // 공격 작동 시간
+        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0.45f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0f)
+        {
+            playerAttack.SetActive(true);
+        }
+
+        // 미공격 및 즉시 공격 비작동
+        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0.45f)
+        {
+            playerAttack.SetActive(false);
+        }
+
+        // 이동 가능 상태 설정
+        if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
+        {
+            animator.SetInteger("Attack", 0);
+            isMove = true;
+            moveInput = new Vector2(1, 0);
+        }
+        else
+        {
+            isMove = false;
+            rigid.linearVelocity = new Vector2(0f, rigid.linearVelocity.y);
+            moveInput = Vector2.zero;
+        }
+
         // 와이어 액션
         if (joint.enabled)
         {
