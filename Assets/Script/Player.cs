@@ -83,9 +83,9 @@ public class Player : MonoBehaviour
                 if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 1);
-                    attackAmount[0] = 0.6f; // 공격 쿨타임 설정
+                    attackAmount[0] = 0.5f; // 공격 쿨타임 설정
                 }
-                else if (attackAmount[0] <= 0.15f && attackAmount[1] <= 0 && attackAmount[2] <= 0)
+                else if (attackAmount[0] <= 0.25f && attackAmount[1] <= 0 && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 2);
                     attackAmount[0] = 0f;
