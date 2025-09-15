@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Script")]
     public CinemachineCamera cinemachine;
+    public CinemachineFollow cinemachineFollow;
     public Player player;
     public Password password;
     public DB db;
@@ -169,4 +171,60 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator AttackCameraZoom(int attackindex)
+    {
+        bool stopNow = false;
+
+        switch (attackindex)
+        {
+            case 0:
+                float zoom = 3f - cinemachine.Lens.OrthographicSize;
+                float offX = 6.4f - cinemachineFollow.FollowOffset.x;
+                float offY = 0.1f - cinemachineFollow.FollowOffset.y;
+
+                // 카메라 줌 기본값 원위치
+                for (int i = 0; i < 10; i++)
+                {
+                    cinemachine.Lens.OrthographicSize += zoom / 10;
+                    cinemachineFollow.FollowOffset.x += offX / 10;
+                    cinemachineFollow.FollowOffset.y += offY / 10;
+                    if (stopNow == true) break;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                // 카메라 값 초기화
+                cinemachine.Lens.OrthographicSize = 3f;
+                cinemachineFollow.FollowOffset.x = 6.4f;
+                cinemachineFollow.FollowOffset.y = 0.1f;
+                break;  
+            case 1:
+                // 카메라 값 초기화
+                stopNow = true;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    cinemachine.Lens.OrthographicSize -= 0.005f;
+                    cinemachineFollow.FollowOffset.x -= 0.115f;
+                    yield return new WaitForSeconds(0.01f);
+                }
+
+                stopNow = false;
+                break;
+            case 2:
+                for (int i = 0; i < 20; i++)
+                {
+                    cinemachine.Lens.OrthographicSize -= 0.003f;
+                    cinemachineFollow.FollowOffset.x -= 0.04f;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < 20; i++)
+                {
+                    cinemachine.Lens.OrthographicSize -= 0.003f;
+                    cinemachineFollow.FollowOffset.x -= 0.045f;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                break;
+        }
+    }
 }

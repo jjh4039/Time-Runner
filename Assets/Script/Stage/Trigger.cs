@@ -58,8 +58,34 @@ public class Trigger : MonoBehaviour
                 GameManager.instance.StartCoroutine("TimeDown", 1f);
                 GameManager.instance.isPerfect = false;
                 break;
-            case 4: // 화살 스테이지 시작 
+            case 4: // 화살 스테이지 시작
+                GameManager.instance.player.playerSpaceMode = Player.PlayerSpaceMode.attack;
+                StartCoroutine("CameraZoom", true);
+                boxCollider2D.enabled = false;
                 break;
+        }
+    }
+
+    IEnumerator CameraZoom(bool mode)
+    {
+        if (mode) // 줌 인
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                GameManager.instance.cinemachine.Lens.OrthographicSize -= 0.1f;
+                GameManager.instance.cinemachineFollow.FollowOffset.x -= 0.08f;
+                GameManager.instance.cinemachineFollow.FollowOffset.y -= 0.07f;
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            // 줌 상태 카메라 값
+            GameManager.instance.cinemachine.Lens.OrthographicSize = 3f;
+            GameManager.instance.cinemachineFollow.FollowOffset.x = 6.4f;
+            GameManager.instance.cinemachineFollow.FollowOffset.y = 0.1f;
+        }
+        else // 줌 아웃
+        {
+
         }
     }
 

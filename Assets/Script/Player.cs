@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
 
 public class Player : MonoBehaviour
 {
@@ -83,17 +84,20 @@ public class Player : MonoBehaviour
                 if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 1);
+                    GameManager.instance.StartCoroutine("AttackCameraZoom", 1);
                     attackAmount[0] = 0.5f; // 공격 쿨타임 설정
                 }
                 else if (attackAmount[0] <= 0.25f && attackAmount[1] <= 0 && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 2);
+                    GameManager.instance.StartCoroutine("AttackCameraZoom", 2);
                     attackAmount[0] = 0f;
                     attackAmount[1] = 0.45f; // 공격 쿨타임 설정
                 }
                 else if (attackAmount[0] <= 0f && attackAmount[1] <= 0.20f && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 3);
+                    GameManager.instance.StartCoroutine("AttackCameraZoom", 3);
                     attackAmount[0] = 0f;
                     attackAmount[1] = 0f;
                     attackAmount[2] = 0.7f; // 공격 쿨타임 설정
@@ -178,6 +182,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // isMove 상태에 따른 이동
+        moveInput = (isMove) ? new Vector2(1, 0) : Vector2.zero;
+
         // 공격 매커니즘
         for (int i = 0; i < attackAmount.Length; i++)
         {
@@ -202,15 +209,21 @@ public class Player : MonoBehaviour
         // 이동 가능 상태 설정
         if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
         {
-            animator.SetInteger("Attack", 0);
-            isMove = true;
-            moveInput = new Vector2(1, 0);
+            if (isMove == false)
+            {
+                animator.SetInteger("Attack", 0);
+                isMove = true;
+                if (playerSpaceMode == PlayerSpaceMode.attack)
+                    GameManager.instance.StartCoroutine("AttackCameraZoom", 0);
+            }
         }
         else
         {
-            isMove = false;
-            rigid.linearVelocity = new Vector2(0f, rigid.linearVelocity.y);
-            moveInput = Vector2.zero;
+            if (isMove == true)
+            {
+                isMove = false;
+                rigid.linearVelocity = new Vector2(0f, rigid.linearVelocity.y);
+            }
         }
 
         // 와이어 액션
@@ -222,7 +235,7 @@ public class Player : MonoBehaviour
 
         // 기초 이동 (비와이어 상태)
         if (!joint.enabled) 
-        { 
+        {
             float horizontalMovement = moveInput.x * speed * Time.deltaTime;
             Vector3 newPosition = transform.position + new Vector3(horizontalMovement, 0, 0);
             transform.position = newPosition;
