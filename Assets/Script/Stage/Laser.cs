@@ -7,7 +7,6 @@ public class Laser : MonoBehaviour
     private Light2D light2d;
     public BoxCollider2D boxCollider2D;
     public GameObject arrowPrefab;
-    public RectTransform rectParent;
 
     public void Awake()
     {
@@ -26,12 +25,12 @@ public class Laser : MonoBehaviour
 
     IEnumerator SummonArrow()
     {
-        Instantiate(arrowPrefab, new Vector3(transform.position.x + 50f, transform.position.y, 0), Quaternion.Euler(0, 0, 0)).transform.parent = this.transform;
+        Instantiate(arrowPrefab, new Vector3(transform.position.x + 34f, transform.position.y, 0), Quaternion.Euler(0, 0, 0)).transform.parent = this.transform;
 
         for (int i = 0; i < 10; i++)
         {
             light2d.color = new Color(1, 1 - i * 0.1f, 1 - i * 0.1f, 1 - i * 0.1f);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.003f);
         }
         light2d.enabled = false;
     }

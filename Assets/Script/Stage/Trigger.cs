@@ -63,6 +63,11 @@ public class Trigger : MonoBehaviour
                 StartCoroutine("CameraZoom", true);
                 boxCollider2D.enabled = false;
                 break;
+            case 5: // 화살 스테이지 종료
+                GameManager.instance.player.playerSpaceMode = Player.PlayerSpaceMode.jump;
+                StartCoroutine("CameraZoom", false);
+                boxCollider2D.enabled = false;
+                break;
         }
     }
 
@@ -85,7 +90,18 @@ public class Trigger : MonoBehaviour
         }
         else // 줌 아웃
         {
+            for (int i = 0; i < 20; i++)
+            {
+                GameManager.instance.cinemachine.Lens.OrthographicSize += 0.1f;
+                GameManager.instance.cinemachineFollow.FollowOffset.x += 0.08f;
+                GameManager.instance.cinemachineFollow.FollowOffset.y += 0.07f;
+                yield return new WaitForSeconds(0.01f);
+            }
 
+            // 기본 상태 카메라 값
+            GameManager.instance.cinemachine.Lens.OrthographicSize = 5f;
+            GameManager.instance.cinemachineFollow.FollowOffset.x = 8f;
+            GameManager.instance.cinemachineFollow.FollowOffset.y = 1.5f;
         }
     }
 

@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
                 guideText.text = "비밀번호를 입력하세요";
                 keyGuideText.text = $"비밀번호 입력 : [ <color=#{colorCode}>Number Pad</color> ]";
                 break;
+            case 4:
+                titleText.text = "";
+                break;
             default:
                 titleText.text = "";
                 break;

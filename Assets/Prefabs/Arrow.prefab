@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3f217005e4e48479044b5655fe4104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowSpeed: 50
+  arrowSpeed: 52
   capsuleCollider2D: {fileID: 0}
   trigger: {fileID: 0}
 --- !u!114 &5153461431241872743

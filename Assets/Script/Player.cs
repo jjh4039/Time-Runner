@@ -195,13 +195,13 @@ public class Player : MonoBehaviour
         }
 
         // 공격 작동 시간
-        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0.45f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0f)
+        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0.55f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0f)
         {
             playerAttack.SetActive(true);
         }
 
         // 미공격 및 즉시 공격 비작동
-        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0.45f)
+        if (attackAmount[0] + attackAmount[1] + attackAmount[2] <= 0f || attackAmount[0] + attackAmount[1] + attackAmount[2] > 0.55f)
         {
             playerAttack.SetActive(false);
         }
