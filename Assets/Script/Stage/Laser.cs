@@ -26,7 +26,6 @@ public class Laser : MonoBehaviour
     IEnumerator SummonArrow()
     {
         Instantiate(arrowPrefab, new Vector3(transform.position.x + 34f, transform.position.y, 0), Quaternion.Euler(0, 0, 0)).transform.parent = this.transform;
-
         for (int i = 0; i < 10; i++)
         {
             light2d.color = new Color(1, 1 - i * 0.1f, 1 - i * 0.1f, 1 - i * 0.1f);

@@ -23,6 +23,7 @@ public class Arrow : MonoBehaviour
         if (collision.CompareTag("PlayerAttack"))
         {
             Instantiate(destroyParticle, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.Euler(-90f, 0, 0)).transform.parent = GameObject.Find("Stage5(Clone)").transform;
+            GameManager.instance.player.playerAttack.SetActive(false);
             Destroy(gameObject);
         }
     }
