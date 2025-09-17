@@ -2320,12 +2320,13 @@ MonoBehaviour:
     m_Bits: 8
   lineRenderer: {fileID: 0}
   joint: {fileID: 0}
-  isMove: 1
+  isMove: 0
   moveInput: {x: 0, y: 0}
   attackAmount: []
   jumpForce: 8.8
   speed: 12
   isGrounded: 0
+  isRestart: 1
   playerAttack: {fileID: 2092427088}
   playerSpaceMode: 0
   groundCheckRadius: 0.2

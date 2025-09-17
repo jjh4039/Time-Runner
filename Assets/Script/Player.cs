@@ -18,13 +18,14 @@ public class Player : MonoBehaviour
     public LineRenderer lineRenderer;
     public DistanceJoint2D joint;
 
-    public Boolean isMove = true;
+    public bool isMove;
 
     public Vector2 moveInput;
     public float[] attackAmount;
     public float jumpForce;
     public float speed;
     public bool isGrounded;
+    public bool isRestart;
     public GameObject playerAttack;
     public enum PlayerSpaceMode { jump, attack, both }
     public PlayerSpaceMode playerSpaceMode;
@@ -50,12 +51,15 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context) 
     {
-        if (joint.enabled == false && isMove == true) moveInput = context.ReadValue<Vector2>();
+        if (context.performed && isRestart)
+        { 
+            isMove = true;
+            isRestart = false;
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        
         // 와이어 상태에서는 와이어 해제 액션
         if (joint.enabled)
         {
@@ -209,7 +213,7 @@ public class Player : MonoBehaviour
         // 이동 가능 상태 설정
         if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
         {
-            if (isMove == false)
+            if (!isMove && !isRestart)
             {
                 animator.SetInteger("Attack", 0);
                 isMove = true;
@@ -217,7 +221,7 @@ public class Player : MonoBehaviour
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 0);
             }
         }
-        else
+        else if (!isRestart && isMove) // 수정필요!
         {
             if (isMove == true)
             {

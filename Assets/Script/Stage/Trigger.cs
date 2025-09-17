@@ -13,8 +13,6 @@ public class Trigger : MonoBehaviour
     public Transform respawnPoint;
     public GameObject respawnObject;
 
-
-
     public void Awake()
     {
         switch (triggerNumber)
@@ -48,6 +46,8 @@ public class Trigger : MonoBehaviour
             case 1: // 리스폰 & 2초 감소 (리스폰, 낙사)
                 StartCoroutine("TriggerOne");
                 GameManager.instance.isPerfect = false;
+                GameManager.instance.player.isMove = false;
+                GameManager.instance.player.isRestart = true;
                 break;
             case 2: // 1초 감소 및 삭제 (비밀번호 실패)
                 GameManager.instance.StartCoroutine("TimeDown", 1f);
@@ -108,7 +108,6 @@ public class Trigger : MonoBehaviour
     // 카메라 이동 및 리스폰, 페이드 인/아웃 
     IEnumerator TriggerOne()
     {
-        GameManager.instance.player.isMove = false;
 
         for (int i = 0; i < 20; i++)
         {
@@ -130,6 +129,5 @@ public class Trigger : MonoBehaviour
         }
 
         GameManager.instance.screenAlpha.alpha = 0f;
-        GameManager.instance.player.isMove = true;
     }
 }
