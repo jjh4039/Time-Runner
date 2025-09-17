@@ -5,6 +5,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] private int arrowSpeed;
     public CapsuleCollider2D capsuleCollider2D;
     public Trigger trigger;
+    public GameObject destroyParticle;
 
     public void Awake()
     {
@@ -21,6 +22,7 @@ public class Arrow : MonoBehaviour
 
         if (collision.CompareTag("PlayerAttack"))
         {
+            Instantiate(destroyParticle, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.Euler(-90f, 0, 0)).transform.parent = GameObject.Find("Stage5(Clone)").transform;
             Destroy(gameObject);
         }
     }

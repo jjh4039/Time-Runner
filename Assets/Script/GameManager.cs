@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
                 upTime = 12f;
                 password.StartCoroutine("CheckPassword");
                 break;
+            case 4:
+                upTime = 11.5f;
+                break;
             default:
                 upTime = 0;
                 break;
@@ -132,7 +135,9 @@ public class GameManager : MonoBehaviour
                 keyGuideText.text = $"비밀번호 입력 : [ <color=#{colorCode}>Number Pad</color> ]";
                 break;
             case 4:
-                titleText.text = "";
+                titleText.text = "Lazer Quiver";
+                guideText.text = "돌파하고, 파괴하세요";
+                keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
                 break;
             default:
                 titleText.text = "";
