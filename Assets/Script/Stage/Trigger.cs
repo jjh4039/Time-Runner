@@ -108,7 +108,6 @@ public class Trigger : MonoBehaviour
     // 카메라 이동 및 리스폰, 페이드 인/아웃 
     IEnumerator TriggerOne()
     {
-
         for (int i = 0; i < 20; i++)
         {
             GameManager.instance.screenAlpha.alpha += 0.05f;
