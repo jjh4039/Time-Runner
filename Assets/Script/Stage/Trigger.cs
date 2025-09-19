@@ -120,6 +120,7 @@ public class Trigger : MonoBehaviour
         GameManager.instance.player.transform.position = respawnPoint.position;
         GameManager.instance.cinemachine.ForceCameraPosition(respawnPoint.position, Quaternion.identity);
         GameManager.instance.screenAlpha.alpha = 1f;
+        GameManager.instance.StartCoroutine("RestartText");
 
         for (int i = 0; i < 20; i++)
         {

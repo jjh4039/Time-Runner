@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI guideText;
     public TextMeshProUGUI keyGuideText;
     public TextMeshProUGUI timeGuideText;
+    public TextMeshProUGUI restartText;
     public CanvasGroup keyGuideAlpha;
     public CanvasGroup guideTextAlpha;
     public GameObject signPrefab;
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour
             case 4:
                 titleText.text = "Lazer Quiver";
                 guideText.text = "돌파하고, 파괴하세요!";
-                keyGuideText.text = $"공격 f/ 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
+                keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
                 break;
             default:
                 titleText.text = "";
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
         isPerfect = true;
     }
 
-    IEnumerator GuideAlpha()
+    public IEnumerator GuideAlpha()
     {
         keyGuideAlpha.alpha = 0;
 
@@ -177,6 +178,28 @@ public class GameManager : MonoBehaviour
             guideTextAlpha.alpha -= 0.03f;
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    public IEnumerator RestartText()
+    {
+        while (player.isRestart)
+        {
+            restartText.alpha = 0.7f;
+            for (int i = 0; i < 30; i++)
+            {
+                if (!player.isRestart) break;
+                restartText.alpha -= 0.015f;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (int i = 0; i < 30; i++)
+            {
+                if (!player.isRestart) break;
+                restartText.alpha += 0.015f;
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        restartText.alpha = 0f;
     }
 
     public IEnumerator AttackCameraZoom(int attackindex)

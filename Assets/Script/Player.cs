@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         }
 
         // 일반 점프 & 공격 액션
-        else
+        else if (!isRestart) // 부활 시 점프, 공격 방지
         {
             // 점프
             if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
