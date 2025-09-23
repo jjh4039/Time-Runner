@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Switch;
 using UnityEngine.SocialPlatforms;
 
 public class Player : MonoBehaviour
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
     public PlayerSpaceMode playerSpaceMode;
     public float groundCheckRadius;
     public Anchor connectedAnchor;
+    public bool switchMode;
+    public bool isSwitch;
 
 
     void Awake()
@@ -38,6 +41,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+        switchMode = false;
+        isSwitch = false;
 
         // 와이어 관련
         lineRenderer = GetComponent<LineRenderer>();

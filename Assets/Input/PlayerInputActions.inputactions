@@ -329,6 +329,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Switch",
+            "id": "64166236-4e47-426e-971b-0f035aed0708",
+            "actions": [
+                {
+                    "name": "Switch-On",
+                    "type": "Button",
+                    "id": "9ffc18d5-96ae-46d1-8f47-29eade2299f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch-Off",
+                    "type": "Button",
+                    "id": "5b35aa44-cc56-48cc-93a4-3ebef896b779",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4562a151-568c-4505-83fd-c6151bc40139",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch-On",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3e562e1-93eb-4d5c-811f-05785dce54a3",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch-Off",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

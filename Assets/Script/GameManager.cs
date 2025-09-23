@@ -93,6 +93,9 @@ public class GameManager : MonoBehaviour
             case 4:
                 upTime = 12f;
                 break;
+            case 5:
+                upTime = 7f;
+                break;
             default:
                 upTime = 0;
                 break;
@@ -137,8 +140,14 @@ public class GameManager : MonoBehaviour
                 break;
             case 4:
                 titleText.text = "Lazer Quiver";
-                guideText.text = "돌파하고, 파괴하세요!";
+                guideText.text = "돌파하고, 파괴하세요";
                 keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
+                break;
+            case 5:
+                titleText.text = "Logic Gate";
+                guideText.text = "스위치를 조작하여 돌파하세요";
+                keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                    $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
                 break;
             default:
                 titleText.text = "";
