@@ -15,7 +15,7 @@ public class Switch : MonoBehaviour
 
     public void Awake()
     {
-        switchMode = true;
+        switchMode = false;
         light2D = GetComponent<Light2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
