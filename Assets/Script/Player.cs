@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
         { 
             isMove = true;
             isRestart = false;
+            speed = 12f;
         }
     }
 
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
         if (context.performed && isZip == true)
         {
             zipLine.nowStop = true;
-            speed = 6f;
+            speed = 9f;
         }
 
         // 일반 점프 & 공격 액션
@@ -191,22 +192,18 @@ public class Player : MonoBehaviour
             lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y + 0.2f));
         }
 
-        if (isZip) transform.position = new Vector2(zipLine.zip.transform.position.x + 0.1f, zipLine.zip.transform.position.y - 1f);
+        // 임시 집라인 매커니즘 + Late Update
+        if (isZip)
+        {
+            rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
+            rigid.angularVelocity = 0f;
+        }
     }
 
     void FixedUpdate()
     {
         // isMove 상태에 따른 이동
         moveInput = (isMove) ? new Vector2(1, 0) : Vector2.zero;
-
-        // 임시 집라인 매커니즘
-        if (isZip)  
-        {
-            rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
-            rigid.angularVelocity = 0f;
-
-            transform.position = new Vector2(zipLine.zip.transform.position.x + 0.1f, zipLine.zip.transform.position.y - 1f);
-        }
 
         // 공격 매커니즘
         for (int i = 0; i < attackAmount.Length; i++)
@@ -279,6 +276,12 @@ public class Player : MonoBehaviour
     {
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
         animator.SetBool("Jump", !isGrounded);
+
+        if (isZip)
+        {
+            // 렌더링 직전에 zipLine 위치에 맞춰 플레이어 위치를 조정
+            transform.position = new Vector2(zipLine.zip.transform.position.x - 0.07f, zipLine.zip.transform.position.y - 1.05f);
+        }
 
         if (moveInput.x != 0)
         {

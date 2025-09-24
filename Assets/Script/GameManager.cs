@@ -96,6 +96,9 @@ public class GameManager : MonoBehaviour
             case 5:
                 upTime = 7f;
                 break;
+            case 6:
+                upTime = 13f;
+                break ;
             default:
                 upTime = 0;
                 break;
@@ -148,6 +151,11 @@ public class GameManager : MonoBehaviour
                 guideText.text = "스위치를 조작하여 돌파하세요";
                 keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
                                     $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
+                break;
+            case 6:
+                titleText.text = "Zip-Line";
+                guideText.text = "집라인을 탑승하여 돌파하세요";
+                keyGuideText.text = $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
                 break;
             default:
                 titleText.text = "";

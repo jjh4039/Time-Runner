@@ -9,15 +9,26 @@ public class ZipLine : MonoBehaviour
     public Transform startPos;
     public Transform endPos;
     public GameObject zip;
+    public Vector3 zipResetPos;
     public Light2D light2D;
     public CapsuleCollider2D capsuleCollider2D;
     public bool isInteraction;
     public bool nowStop;
 
-    public float startSpeed = 30f;
-    public float maxSpeed = 100f;
+    public float startSpeed = 100f;
+    public float maxSpeed = 400f;
 
-    public float duration = 2f;
+    public float duration = 1f;
+
+    private void Awake()
+    {
+        zipResetPos = zip.transform.position;
+    }
+
+    private void Update()
+    {
+        if (GameManager.instance.player.isRestart) zip.transform.position = zipResetPos;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -39,17 +50,17 @@ public class ZipLine : MonoBehaviour
         GameManager.instance.player.animator.SetBool("Zip", true);
 
         float elapsedTime = 0f;
-
+        
         while (elapsedTime < duration && Vector3.Distance(zip.transform.position, new Vector3(endPos.position.x, endPos.position.y - 0.6f, endPos.position.z)) > 0.1f
             && !nowStop)
         {
             elapsedTime += Time.deltaTime;
-
+            
             float normalizedTime = elapsedTime / duration;
             float currentSpeed = Mathf.Lerp(startSpeed, maxSpeed, normalizedTime);
 
             Vector3 direction = (new Vector3(endPos.position.x, endPos.position.y - 0.6f, endPos.position.z) - zip.transform.position).normalized; // endPos에 도달하지 않았으므로
-            zip.transform.position += direction * currentSpeed * 3f * Time.deltaTime;
+            zip.transform.position += direction * currentSpeed * Time.deltaTime * 5f;
             yield return null; // 다음 프레임까지 대기
         }
 
