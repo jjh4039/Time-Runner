@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     public LineRenderer lineRenderer;
     public DistanceJoint2D joint;
+    public ZipLine zipLine;
 
     public bool isMove;
 
@@ -27,22 +28,18 @@ public class Player : MonoBehaviour
     public float speed;
     public bool isGrounded;
     public bool isRestart;
+    public bool isZip;
     public GameObject playerAttack;
     public enum PlayerSpaceMode { jump, attack, both }
     public PlayerSpaceMode playerSpaceMode;
     public float groundCheckRadius;
     public Anchor connectedAnchor;
-    public bool switchMode;
-    public bool isSwitch;
-
 
     void Awake()
     { 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
-        switchMode = false;
-        isSwitch = false;
 
         // 와이어 관련
         lineRenderer = GetComponent<LineRenderer>();
@@ -75,6 +72,12 @@ public class Player : MonoBehaviour
 
             rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f, rigid.linearVelocity.y);
             connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
+        }
+
+        if (context.performed && isZip == true)
+        {
+            zipLine.nowStop = true;
+            speed = 6f;
         }
 
         // 일반 점프 & 공격 액션
@@ -187,12 +190,23 @@ public class Player : MonoBehaviour
             // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
             lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y + 0.2f));
         }
+
+        if (isZip) transform.position = new Vector2(zipLine.zip.transform.position.x + 0.1f, zipLine.zip.transform.position.y - 1f);
     }
 
     void FixedUpdate()
     {
         // isMove 상태에 따른 이동
         moveInput = (isMove) ? new Vector2(1, 0) : Vector2.zero;
+
+        // 임시 집라인 매커니즘
+        if (isZip)  
+        {
+            rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
+            rigid.angularVelocity = 0f;
+
+            transform.position = new Vector2(zipLine.zip.transform.position.x + 0.1f, zipLine.zip.transform.position.y - 1f);
+        }
 
         // 공격 매커니즘
         for (int i = 0; i < attackAmount.Length; i++)
@@ -226,7 +240,7 @@ public class Player : MonoBehaviour
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 0);
             }
         }
-        else if (!isRestart && isMove) // 수정필요!
+        else if (!isRestart && isMove) // 수정 필요!
         {
             if (isMove == true)
             {
@@ -257,6 +271,7 @@ public class Player : MonoBehaviour
         if (isGrounded && rigid.gravityScale != 2f)
         {
             rigid.gravityScale = 2f;
+            speed = 12f;
         }
     }
 
