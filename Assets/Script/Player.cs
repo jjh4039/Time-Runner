@@ -123,7 +123,6 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("Wire action performed");
             // 마우스 위치를 월드 좌표로 변환
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 

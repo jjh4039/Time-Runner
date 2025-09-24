@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
     public int[] nextLevelInt; // 각 스테이지 레벨에 도달하기 위한 스테이지 수
     public int currentLevel; // 현재 플레이어 레벨
+    public Queue<int> recentNumbers = new Queue<int>();
+    public const int historySize = 3;
 
     public GameObject[] stagePrefabs;
     public Transform player; // 플레이어 오브젝트
@@ -23,7 +26,7 @@ public class StageManager : MonoBehaviour
 
     void Update()
     {
-        nextSpawnPoint.y = 0; // y축 고정
+        nextSpawnPoint.y = 0;
 
         // 플레이어가 다음 스테이지를 생성할 지점에 도달했는지 확인
         // 플레이어의 위치(x)가 다음 생성 지점보다 멀리 있다면
@@ -44,17 +47,28 @@ public class StageManager : MonoBehaviour
 
     void SpawnStage()
     {
-        
         int randomIndex = Random.Range(0, stagePrefabs.Length);
-        randomIndex = 6;
 
         // 연속 같은 스테이지 방지 (구현 필요)
+        while (recentNumbers.Contains(randomIndex))
+        {
+            Debug.Log(randomIndex + "가 이미 큐에 있어서 다시 뽑습니다.");
+            randomIndex = Random.Range(0, stagePrefabs.Length);
+        }
 
-        // 스테이지 생성
+        Debug.Log(randomIndex + "로 생성합니다.");
+        recentNumbers.Enqueue(randomIndex);
+
+        if (recentNumbers.Count > historySize)
+        {
+            recentNumbers.Dequeue();
+        }
+
+        string queueContents = string.Join(", ", recentNumbers.ToArray());
+        Debug.Log("현재 큐의 내용: [" + queueContents + "]");
+
+        // 스테이지 생성 & 스테이지 번호 전달
         GameObject newStage = Instantiate(stagePrefabs[randomIndex], nextSpawnPoint, Quaternion.identity);
-
-
-        // 최종 생성 스테이지 번호 전달
         GameManager.stageNumber = randomIndex;
 
         // 생성된 스테이지에 고유한 태그를 붙여주기
