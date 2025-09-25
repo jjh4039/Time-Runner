@@ -48,6 +48,8 @@ public class Gate : MonoBehaviour
             GameManager.instance.screenAlpha.alpha += 0.025f;
             GameManager.instance.playerLight.light2d.color = new Color(GameManager.instance.playerLight.light2d.color.r, GameManager.instance.playerLight.light2d.color.g,
                 GameManager.instance.playerLight.light2d.color.b, GameManager.instance.playerLight.light2d.color.a - 0.1f);
+            GameManager.instance.player.spriteRenderer.color = new Color(GameManager.instance.player.spriteRenderer.color.r, GameManager.instance.player.spriteRenderer.color.g,
+                GameManager.instance.player.spriteRenderer.color.b, GameManager.instance.player.spriteRenderer.color.a - 0.1f);
             yield return new WaitForSeconds(0.003f);
         }
 
@@ -61,6 +63,8 @@ public class Gate : MonoBehaviour
 
         GameManager.instance.playerLight.light2d.color = new Color(GameManager.instance.playerLight.light2d.color.r, GameManager.instance.playerLight.light2d.color.g,
             GameManager.instance.playerLight.light2d.color.b, 0f);
+        GameManager.instance.player.spriteRenderer.color = new Color(GameManager.instance.player.spriteRenderer.color.r, GameManager.instance.player.spriteRenderer.color.g,
+    GameManager.instance.player.spriteRenderer.color.b, 1f);
 
         for (int i = 0; i < 40; i++)
         {
