@@ -30,6 +30,7 @@ TagManager:
   - Stage23
   - GrapplePoint
   - PlayerAttack
+  - Gate
   layers:
   - Default
   - TransparentFX

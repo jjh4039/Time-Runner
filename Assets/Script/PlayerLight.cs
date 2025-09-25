@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerLight : MonoBehaviour
 {
-    private Light2D light2d;
+    public Light2D light2d;
 
     void Start()
     {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera cinemachine;
     public CinemachineFollow cinemachineFollow;
     public Player player;
+    public PlayerLight playerLight;
     public Password password;
     public DB db;
 

@@ -19,9 +19,13 @@ public class Player : MonoBehaviour
     public LineRenderer lineRenderer;
     public DistanceJoint2D joint;
     public ZipLine zipLine;
+    public Gate connectedGate;
+    public Anchor connectedAnchor;
+
+    public Vector2 mousePos;
+    public RaycastHit2D hit;
 
     public bool isMove;
-
     public Vector2 moveInput;
     public float[] attackAmount;
     public float jumpForce;
@@ -33,7 +37,6 @@ public class Player : MonoBehaviour
     public enum PlayerSpaceMode { jump, attack, both }
     public PlayerSpaceMode playerSpaceMode;
     public float groundCheckRadius;
-    public Anchor connectedAnchor;
 
     void Awake()
     { 
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
         attackAmount = new float[] { 0, 0, 0 };
     }
 
+    // 이동 시작
     public void OnMove(InputAction.CallbackContext context) 
     {
         if (context.performed && isRestart)
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
             connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
         }
 
+        // 집라인 도중 해제
         if (context.performed && isZip == true)
         {
             zipLine.nowStop = true;
@@ -119,16 +124,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Shift(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (hit.collider != null && hit.collider.CompareTag("Gate") && connectedGate.isShiftable)
+            {
+                connectedGate.isShiftable = false;
+                connectedGate.StartCoroutine("Shift");
+            }
+        }
+    }
+
     public void OnWire(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            // 마우스 위치를 월드 좌표로 변환
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-            // Raycast를 사용하여 클릭한 위치에 있는 오브젝트 찾기
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
             // 만약 클릭한 오브젝트가 'GrapplePoint' 태그를 가지고 있다면
             if (hit.collider != null && hit.collider.CompareTag("GrapplePoint"))
             {
@@ -185,6 +196,16 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (hit.collider != null && hit.collider.CompareTag("Gate"))
+        {
+            connectedGate = hit.collider.GetComponent<Gate>();
+            connectedGate.Connected(true);
+        }
+        else if (connectedGate != null) connectedGate.Connected(false);
+
         if (joint.enabled)
         {
             // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
@@ -228,7 +249,7 @@ public class Player : MonoBehaviour
         // 이동 가능 상태 설정
         if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
         {
-            if (!isMove && !isRestart)
+            if (!isMove && !isRestart && playerSpaceMode == PlayerSpaceMode.attack)
             {
                 animator.SetInteger("Attack", 0);
                 isMove = true;
@@ -236,7 +257,7 @@ public class Player : MonoBehaviour
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 0);
             }
         }
-        else if (!isRestart && isMove) // 수정 필요!
+        else if (!isRestart && isMove && playerSpaceMode == PlayerSpaceMode.attack) // 화살 스테이지 오류시 수정 요망
         {
             if (isMove == true)
             {
