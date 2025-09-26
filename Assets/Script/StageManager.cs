@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    public int[] nextLevelInt; // 각 스테이지 레벨에 도달하기 위한 스테이지 수
     public int currentLevel; // 현재 플레이어 레벨
     public Queue<int> recentNumbers = new Queue<int>();
     public const int historySize = 3;
 
+    public GameObject[] switchLevelStagePrefabs;
     public GameObject[] stagePrefabs;
+    public GameObject[] stage2Prefabs;
+    public GameObject[] stage3Prefabs;
     public Transform player; // 플레이어 오브젝트
     public float stageClearDistance; // 스테이지 끝에서 얼마나 떨어졌을 때 다음 스테이지를 생성할지
 
@@ -20,8 +22,7 @@ public class StageManager : MonoBehaviour
     {
         nextSpawnPoint = Vector3.zero;
         SpawnStage();
-
-        currentLevel = 0;
+        currentLevel = 1;
     }
 
     void Update()
@@ -47,41 +48,45 @@ public class StageManager : MonoBehaviour
 
     void SpawnStage()
     {
-        int randomIndex = Random.Range(0, stagePrefabs.Length);
-
-        // 연속 같은 스테이지 방지 (구현 필요)
-        while (recentNumbers.Contains(randomIndex))
+        GameObject newStage;
+        if (stageCount == 2) // SwitchLevel Prefabs 생성
         {
-            Debug.Log(randomIndex + "가 이미 큐에 있어서 다시 뽑습니다.");
-            randomIndex = Random.Range(0, stagePrefabs.Length);
+
         }
-
-        Debug.Log(randomIndex + "로 생성합니다.");
-        recentNumbers.Enqueue(randomIndex);
-
-        if (recentNumbers.Count > historySize)
+        else // 스테이지 생성
         {
-            recentNumbers.Dequeue();
+            switch (currentLevel) // 레벨에 맞는 스테이지 생성
+            {
+                case 1:
+                    int randomIndex = Random.Range(0, stagePrefabs.Length);
+                    while (recentNumbers.Contains(randomIndex))
+                    {
+                        randomIndex = Random.Range(0, stagePrefabs.Length);
+                    }
+                    recentNumbers.Enqueue(randomIndex);
+
+                    if (recentNumbers.Count > historySize)
+                    {
+                        recentNumbers.Dequeue();
+                    }
+
+                    string queueContents = string.Join(", ", recentNumbers.ToArray());
+                    GameManager.instance.StartCoroutine("TimeUp", randomIndex); // 스테이지 클리어 시마다 시간 추가
+
+                    // 스테이지 생성 & 스테이지 번호 전달
+                    newStage = Instantiate(stagePrefabs[randomIndex], nextSpawnPoint, Quaternion.identity);
+                    newStage.tag = "Stage" + stageCount;
+
+                    GameManager.stageNumber = randomIndex;
+                    Transform endOfStage = newStage.transform.Find("EndOfStage");
+                    if (endOfStage != null)
+                    {
+                        nextSpawnPoint = endOfStage.position;
+                    }
+                    break;
+            }
+            stageCount++;
         }
-
-        string queueContents = string.Join(", ", recentNumbers.ToArray());
-        Debug.Log("현재 큐의 내용: [" + queueContents + "]");
-
-        // 스테이지 생성 & 스테이지 번호 전달
-        GameObject newStage = Instantiate(stagePrefabs[randomIndex], nextSpawnPoint, Quaternion.identity);
-        GameManager.stageNumber = randomIndex;
-
-        // 생성된 스테이지에 고유한 태그를 붙여주기
-        newStage.tag = "Stage" + stageCount;
-
-        // 다음 생성 지점 업데이트
-        Transform endOfStage = newStage.transform.Find("EndOfStage");
-        if (endOfStage != null)
-        {
-            nextSpawnPoint = endOfStage.position;
-        }
-
-        stageCount++;
-        GameManager.instance.StartCoroutine("TimeUp", randomIndex); // 스테이지 클리어 시마다 시간 추가
     }
+
 }

@@ -101,6 +101,9 @@ public class GameManager : MonoBehaviour
             case 6:
                 upTime = 13f;
                 break ;
+            case 7:
+                upTime = 8f;
+                break;
             default:
                 upTime = 0;
                 break;
@@ -119,6 +122,9 @@ public class GameManager : MonoBehaviour
     void Guide(int index)
     {
         string colorCode = ColorUtility.ToHtmlStringRGB(stageColor);
+        titleText.color = stageColor;
+        titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
+        timeGuideText.color = titleText.color;
 
         switch (index)
         {
@@ -158,6 +164,11 @@ public class GameManager : MonoBehaviour
                 titleText.text = "Zip-Line";
                 guideText.text = "집라인을 탑승하여 돌파하세요";
                 keyGuideText.text = $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                break;
+            case 7:
+                titleText.text = "Shift-Gate";
+                guideText.text = "게이트를 찾고, 빠르게 이동하세요";
+                keyGuideText.text = $"텔레포트 : [ <color=#{colorCode}>Shift</color> ]";
                 break;
             default:
                 titleText.text = "";
