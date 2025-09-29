@@ -112,9 +112,10 @@ public class GameManager : MonoBehaviour
         timeGuideText.text = "+" + upTime.ToString("F1") + "s";
 
         timeText.color = stageColor;
+        if (stageManager.currentLevel == 1) timeText.color = new Color(1f, 0.7f, 1f);  // 레벨2 임시;
         for (int i = 20; i > 0; i--)
         {
-            GameManager.instance.timeRemaining += upTime / 20;
+            timeRemaining += upTime / 20;
             yield return new WaitForSeconds(0.02f);
         }
         timeText.color = Color.white;
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
     {
         string colorCode = ColorUtility.ToHtmlStringRGB(stageColor);
         titleText.color = stageColor;
+        if (stageManager.currentLevel == 1) titleText.color = new Color(1f, 0.7f, 1f, 0.2f); // 레벨2 임시;
         titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
         timeGuideText.color = titleText.color;
 

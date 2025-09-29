@@ -734,7 +734,7 @@ MonoBehaviour:
   playerLight: {fileID: 1819574135}
   password: {fileID: 1324377563}
   db: {fileID: 1656162488}
-  stageManager: {fileID: 0}
+  stageManager: {fileID: 1656985150}
   screenAlpha: {fileID: 1293220879}
   timeText: {fileID: 194062710}
   titleText: {fileID: 1583015619}
@@ -3171,6 +3171,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   lineRenderer: {fileID: 0}
+  lineMaterials:
+  - {fileID: 2100000, guid: 81ec3c469580b7f44989b22d3332b6db, type: 2}
+  - {fileID: 2100000, guid: d86eae7df30b43f40a1339dff988958a, type: 2}
   joint: {fileID: 0}
   zipLine: {fileID: 0}
   connectedGate: {fileID: 0}

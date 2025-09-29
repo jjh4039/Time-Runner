@@ -60,6 +60,7 @@ public class StageManager : MonoBehaviour
             {
                 case 0:
                     newStage = Instantiate(switchLevelStagePrefabs[0], nextSpawnPoint, Quaternion.identity);
+                    GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[1];
                     break;
                 default:
                     newStage = null;
@@ -76,7 +77,9 @@ public class StageManager : MonoBehaviour
         }
         else // 스테이지 생성
         {
+            
                     int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
+            /*
                     while (recentNumbers.Contains(randomIndex))
                     {
                         randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
@@ -87,7 +90,7 @@ public class StageManager : MonoBehaviour
                     {
                         recentNumbers.Dequeue();
                     }
-
+            */
                     string queueContents = string.Join(", ", recentNumbers.ToArray());
                     GameManager.instance.StartCoroutine("TimeUp", randomIndex); // 스테이지 클리어 시마다 시간 추가
 

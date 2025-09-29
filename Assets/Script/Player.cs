@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public LayerMask groundLayer; // 땅 레이어 설정
 
     public LineRenderer lineRenderer;
+    public Material[] lineMaterials;
     public DistanceJoint2D joint;
     public ZipLine zipLine;
     public Gate connectedGate;
