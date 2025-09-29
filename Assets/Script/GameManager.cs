@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public PlayerLight playerLight;
     public Password password;
     public DB db;
+    public StageManager stageManager;
 
     [Header("Time & UI")]
     public CanvasGroup screenAlpha;

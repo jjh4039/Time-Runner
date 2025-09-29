@@ -19,7 +19,16 @@ public class Anchor : MonoBehaviour
             Vector3 currentRotation = transform.rotation.eulerAngles;
             float newZ = currentRotation.z + 1f;
 
-            light2d.color = Color.red;
+            switch (GameManager.instance.stageManager.currentLevel)
+            {
+                case 0:
+                    light2d.color = new Color(1f, 0.5f, 0.5f); // Red
+                    break;
+                case 1:
+                    light2d.color = new Color(1f, 0.36f, 1f); // Magenta
+                    break;
+            }
+            
             transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, newZ);
         }
         else

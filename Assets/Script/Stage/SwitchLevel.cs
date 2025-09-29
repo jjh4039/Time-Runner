@@ -17,7 +17,7 @@ public class SwitchLevel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             boxCollider2D.enabled = false;
-            StartCoroutine("UpLevel", 2);
+            StartCoroutine("UpLevel",  1);
         }
     }
 

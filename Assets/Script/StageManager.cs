@@ -7,10 +7,8 @@ public class StageManager : MonoBehaviour
     public Queue<int> recentNumbers = new Queue<int>();
     public const int historySize = 3;
 
-    public GameObject[] switchLevelStagePrefabs;
-    public GameObject[] stagePrefabs;
-    public GameObject[] stage2Prefabs;
-    public GameObject[] stage3Prefabs;
+    [SerializeField] public GameObject[] switchLevelStagePrefabs;
+    [SerializeField] public stagePrefabs[] stageArray;
     public Transform player; // 플레이어 오브젝트
     public float stageClearDistance; // 스테이지 끝에서 얼마나 떨어졌을 때 다음 스테이지를 생성할지
 
@@ -18,11 +16,17 @@ public class StageManager : MonoBehaviour
     [SerializeField] private Vector3 nextSpawnPoint; // 다음 생성 위치
     [SerializeField] private int stageCount = 0; // 생성된 스테이지 수   
 
+    [System.Serializable] //반드시 필요
+    public class stagePrefabs //행에 해당되는 이름
+    {
+        public GameObject[] stages;
+    }
+
     void Start()
     {
         nextSpawnPoint = Vector3.zero;
         SpawnStage();
-        currentLevel = 1;
+        currentLevel = 0;
     }
 
     void Update()
@@ -55,13 +59,10 @@ public class StageManager : MonoBehaviour
         }
         else // 스테이지 생성
         {
-            switch (currentLevel) // 레벨에 맞는 스테이지 생성
-            {
-                case 1:
-                    int randomIndex = Random.Range(0, stagePrefabs.Length);
+                    int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
                     while (recentNumbers.Contains(randomIndex))
                     {
-                        randomIndex = Random.Range(0, stagePrefabs.Length);
+                        randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
                     }
                     recentNumbers.Enqueue(randomIndex);
 
@@ -74,7 +75,7 @@ public class StageManager : MonoBehaviour
                     GameManager.instance.StartCoroutine("TimeUp", randomIndex); // 스테이지 클리어 시마다 시간 추가
 
                     // 스테이지 생성 & 스테이지 번호 전달
-                    newStage = Instantiate(stagePrefabs[randomIndex], nextSpawnPoint, Quaternion.identity);
+                    newStage = Instantiate(stageArray[currentLevel].stages[randomIndex], nextSpawnPoint, Quaternion.identity);
                     newStage.tag = "Stage" + stageCount;
 
                     GameManager.stageNumber = randomIndex;
@@ -83,10 +84,7 @@ public class StageManager : MonoBehaviour
                     {
                         nextSpawnPoint = endOfStage.position;
                     }
-                    break;
             }
             stageCount++;
         }
     }
-
-}
