@@ -53,9 +53,26 @@ public class StageManager : MonoBehaviour
     void SpawnStage()
     {
         GameObject newStage;
+
         if (stageCount == 2) // SwitchLevel Prefabs 积己
         {
+            switch (currentLevel)
+            {
+                case 0:
+                    newStage = Instantiate(switchLevelStagePrefabs[0], nextSpawnPoint, Quaternion.identity);
+                    break;
+                default:
+                    newStage = null;
+                    break;
+            }
 
+            newStage.tag = "Stage" + stageCount;
+            Transform endOfStage = newStage.transform.Find("EndOfStage");
+            if (endOfStage != null)
+            {
+                nextSpawnPoint = endOfStage.position;
+            }
+            currentLevel++;
         }
         else // 胶抛捞瘤 积己
         {
@@ -84,7 +101,7 @@ public class StageManager : MonoBehaviour
                     {
                         nextSpawnPoint = endOfStage.position;
                     }
-            }
-            stageCount++;
         }
+            stageCount++;
     }
+}

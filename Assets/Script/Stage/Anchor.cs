@@ -5,6 +5,7 @@ public class Anchor : MonoBehaviour
 {
     public bool isWire;
     public Light2D light2d;
+    public int tmplevel;
 
     void Awake()
     {
@@ -19,7 +20,8 @@ public class Anchor : MonoBehaviour
             Vector3 currentRotation = transform.rotation.eulerAngles;
             float newZ = currentRotation.z + 1f;
 
-            switch (GameManager.instance.stageManager.currentLevel)
+            switch //(GameManager.instance.stageManager.currentLevel)
+                (tmplevel)
             {
                 case 0:
                     light2d.color = new Color(1f, 0.5f, 0.5f); // Red
