@@ -76,39 +76,55 @@ public class GameManager : MonoBehaviour
         float upTime = 0;
         Guide(index);
         StartCoroutine("Sign");
-        
 
-        switch (index)
+        switch (stageManager.currentLevel)
         {
-            case 0:
-                upTime = 4.5f;
+            case 0: // 레벨1 시간
+                switch (index)
+                {
+                    case 0:
+                        upTime = 4.5f;
+                        break;
+                    case 1:
+                        upTime = 5f;
+                        break;
+                    case 2:
+                        upTime = 6f;
+                        break;
+                    case 3:
+                        upTime = 12f;
+                        password.StartCoroutine("CheckPassword");
+                        break;
+                    case 4:
+                        upTime = 12f;
+                        break;
+                    case 5:
+                        upTime = 7f;
+                        break;
+                    case 6:
+                        upTime = 13f;
+                        break;
+                    case 7:
+                        upTime = 8f;
+                        break;
+                    default:
+                        upTime = 0;
+                        break;
+                }
                 break;
-            case 1:
-                upTime = 5f;
-                break;
-            case 2:
-                upTime = 6f;
-                break;
-            case 3:
-                upTime = 12f;
-                password.StartCoroutine("CheckPassword");
-                break;
-            case 4:
-                upTime = 12f;
-                break;
-            case 5:
-                upTime = 7f;
-                break;
-            case 6:
-                upTime = 13f;
-                break ;
-            case 7:
-                upTime = 8f;
-                break;
-            default:
-                upTime = 0;
+            case 1: // 레벨2 시간
+                switch (index)
+                {
+                    case 0:
+                        upTime = 11f;
+                        break;
+                    default:
+                        upTime = 0;
+                        break;
+                }
                 break;
         }
+        
         timeGuideText.text = "+" + upTime.ToString("F1") + "s";
 
         timeText.color = stageColor;
@@ -128,58 +144,72 @@ public class GameManager : MonoBehaviour
         if (stageManager.currentLevel == 1) titleText.color = new Color(1f, 0.7f, 1f, 0.2f); // 레벨2 임시;
         titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
         timeGuideText.color = titleText.color;
-
-        switch (index)
+        switch (stageManager.currentLevel)
         {
-            case 0:
-                titleText.text = "Only Run";
-                guideText.text = "오로지 달리세요";
-                keyGuideText.text = $"달리기 : [ <color=#{colorCode}>D</color> ]";
+            case 0: // 레벨1
+                switch (index)
+                {
+                    case 0:
+                        titleText.text = "Only Run";
+                        guideText.text = "오로지 달리세요";
+                        keyGuideText.text = $"달리기 : [ <color=#{colorCode}>D</color> ]";
+                        break;
+                    case 1:
+                        titleText.text = "Triple Jump";
+                        guideText.text = "3번 점프하세요";
+                        keyGuideText.text = $"점프 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
+                    case 2:
+                        titleText.text = "Grapple Hook";
+                        guideText.text = "와이어를 연결하여 돌파하세요";
+                        keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
+                                            $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
+                    case 3:
+                        titleText.text = "Password";
+                        guideText.text = "비밀번호를 입력하세요";
+                        keyGuideText.text = $"비밀번호 입력 : [ <color=#{colorCode}>Number Pad</color> ]";
+                        break;
+                    case 4:
+                        titleText.text = "Lazer Quiver";
+                        guideText.text = "돌파하고, 파괴하세요";
+                        keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
+                    case 5:
+                        titleText.text = "Logic Gate";
+                        guideText.text = "스위치를 조작하여 돌파하세요";
+                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
+                        break;
+                    case 6:
+                        titleText.text = "Zip-Line";
+                        guideText.text = "집라인을 탑승하여 돌파하세요";
+                        keyGuideText.text = $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
+                    case 7:
+                        titleText.text = "Shift-Gate";
+                        guideText.text = "게이트를 찾고, 빠르게 이동하세요";
+                        keyGuideText.text = $"텔레포트 : [ <color=#{colorCode}>Shift</color> ]";
+                        break;
+                    default:
+                        titleText.text = "";
+                        break;
+                }
                 break;
-            case 1:
-                titleText.text = "Triple Jump";
-                guideText.text = "3번 점프하세요";
-                keyGuideText.text = $"점프 : [ <color=#{colorCode}>Space</color> ]";
+            case 1: // 레벨2
+                switch (index)
+                {
+                    case 0:
+                        titleText.text = "Wire Action";
+                        guideText.text = "와이어를 연결하고, 연속으로 점프하세요";
+                        keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
+                                            $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
+                }
                 break;
-            case 2:
-                titleText.text = "Grapple Hook";
-                guideText.text = "와이어를 연결하여 돌파하세요";
-                keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                    $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
-                break;
-            case 3:
-                titleText.text = "Password";
-                guideText.text = "비밀번호를 입력하세요";
-                keyGuideText.text = $"비밀번호 입력 : [ <color=#{colorCode}>Number Pad</color> ]";
-                break;
-            case 4:
-                titleText.text = "Lazer Quiver";
-                guideText.text = "돌파하고, 파괴하세요";
-                keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
-                break;
-            case 5:
-                titleText.text = "Logic Gate";
-                guideText.text = "스위치를 조작하여 돌파하세요";
-                keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                    $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
-                break;
-            case 6:
-                titleText.text = "Zip-Line";
-                guideText.text = "집라인을 탑승하여 돌파하세요";
-                keyGuideText.text = $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
-                break;
-            case 7:
-                titleText.text = "Shift-Gate";
-                guideText.text = "게이트를 찾고, 빠르게 이동하세요";
-                keyGuideText.text = $"텔레포트 : [ <color=#{colorCode}>Shift</color> ]";
-                break;
-            default:
-                titleText.text = "";
-                break;
-        }
+            }
         StartCoroutine("GuideAlpha");
     }
-
     // 판정검사
     IEnumerator Sign() 
     {
@@ -215,6 +245,11 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RestartText()
     {
+        string OriginalFormat = "[ <color=#{0}>D</color> ] 키로 다시 달리기";
+        string hexColorCode = ColorUtility.ToHtmlStringRGB(stageColor);
+        string newText = string.Format(OriginalFormat, hexColorCode);
+
+        restartText.text = newText;
         while (player.isRestart)
         {
             restartText.alpha = 0.7f;

@@ -53,9 +53,6 @@ public class Gate : MonoBehaviour
             yield return new WaitForSeconds(0.003f);
         }
 
-        GameManager.instance.player.animator.SetBool("isShift", false);
-        GameManager.instance.player.animator.SetBool("Sliding", true);
-
         GameManager.instance.cinemachine.ForceCameraPosition(this.transform.position, Quaternion.identity);
         GameManager.instance.player.isMove = true;
         GameManager.instance.player.transform.position = this.transform.position; 
@@ -65,6 +62,9 @@ public class Gate : MonoBehaviour
             GameManager.instance.playerLight.light2d.color.b, 0f);
         GameManager.instance.player.spriteRenderer.color = new Color(GameManager.instance.player.spriteRenderer.color.r, GameManager.instance.player.spriteRenderer.color.g,
     GameManager.instance.player.spriteRenderer.color.b, 1f);
+
+        GameManager.instance.player.animator.SetBool("isShift", false);
+        GameManager.instance.player.animator.SetBool("Sliding", true);
 
         for (int i = 0; i < 40; i++)
         {
