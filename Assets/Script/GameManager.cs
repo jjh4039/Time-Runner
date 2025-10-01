@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI keyGuideText;
     public TextMeshProUGUI timeGuideText;
     public TextMeshProUGUI restartText;
+    public TextMeshProUGUI switchText;
+    public TextMeshProUGUI subSwitchText;
+    public CanvasGroup switchTextAlpha;
     public CanvasGroup keyGuideAlpha;
     public CanvasGroup guideTextAlpha;
     public GameObject signPrefab;
@@ -249,6 +252,34 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0f);
         }
         isPerfect = true;
+    }
+
+    public IEnumerator SwitchAlpha(int index)
+    {
+        switch (index)
+        {
+           case 0:
+                switchText.text = "시간의 흐름이 빨라집니다.";
+                subSwitchText.text = "x1.2";
+                break;
+            default:
+                break;
+        }
+
+        switchTextAlpha.alpha = 0;
+
+        for (int i = 30; i > 0; i--)
+        {
+            switchTextAlpha.alpha += 0.05f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return new WaitForSeconds(2f);
+
+        for (int i = 50; i > 0; i--)
+        {
+            switchTextAlpha.alpha -= 0.03f;
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     public IEnumerator GuideAlpha()

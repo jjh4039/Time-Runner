@@ -54,12 +54,14 @@ public class StageManager : MonoBehaviour
     {
         GameObject newStage;
 
-        if (stageCount == 2) // SwitchLevel Prefabs 积己
+        // SwitchLevel 胶抛捞瘤 积己
+        if (stageCount == 2) 
         {
             switch (currentLevel)
             {
                 case 0:
                     newStage = Instantiate(switchLevelStagePrefabs[0], nextSpawnPoint, Quaternion.identity);
+                    GameManager.instance.StartCoroutine("SwitchAlpha", 0);
                     GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[1];
                     break;
                 default:
