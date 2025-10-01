@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
         if (context.performed && isZip == true)
         {
             zipLine.nowStop = true;
+            GameManager.instance.StartCoroutine("ZipLineCameraOffset", false);
             speed = 9f;
         }
 

@@ -118,6 +118,7 @@ public class Trigger : MonoBehaviour
         GameManager.instance.player.rigid.linearVelocity = Vector2.zero;
         GameManager.instance.player.moveInput = Vector2.zero;
         GameManager.instance.player.transform.position = respawnPoint.position;
+        GameManager.instance.cinemachineFollow.FollowOffset.y = 1.5f; // »Ï
         GameManager.instance.cinemachine.ForceCameraPosition(respawnPoint.position, Quaternion.identity);
         GameManager.instance.screenAlpha.alpha = 1f;
         GameManager.instance.StartCoroutine("RestartText");

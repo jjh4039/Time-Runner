@@ -118,6 +118,15 @@ public class GameManager : MonoBehaviour
                     case 0:
                         upTime = 11f;
                         break;
+                    case 1:
+                        upTime = 9f;
+                        break;
+                    case 2:
+                        upTime = 10f;
+                        break;
+                    case 3:
+                        upTime = 12f;
+                        break;
                     default:
                         upTime = 0;
                         break;
@@ -205,6 +214,26 @@ public class GameManager : MonoBehaviour
                         keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
                                             $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
                         break;
+                    case 1:
+                        titleText.text = "Logic Leap";
+                        guideText.text = "스위치로 벽과 발판을 조작하세요";
+                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
+                        break;
+                    case 2:
+                        titleText.text = "Control Circuit";
+                        guideText.text = "스위치를 조작하여 집라인을 유지하세요";
+                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
+                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";  
+                        break;
+                    case 3:
+                        titleText.text = "Phase Track";
+                        guideText.text = "게이트로 이동하고, 와이어를 탑승하세요";
+                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
+                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
                 }
                 break;
             }
@@ -269,6 +298,24 @@ public class GameManager : MonoBehaviour
 
         restartText.alpha = 0f;
     }
+    public IEnumerator ZipLineCameraOffset(bool isZip)
+    {
+        if (isZip)
+            for (int i = 0; i < 5; i++)
+            {
+                cinemachineFollow.FollowOffset.y -= 0.2f;
+                yield return new WaitForFixedUpdate();
+            }
+        else
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                cinemachineFollow.FollowOffset.y += 0.05f;
+                yield return new WaitForFixedUpdate();
+            }
+        }
+    }
+
 
     public IEnumerator AttackCameraZoom(int attackindex)
     {
