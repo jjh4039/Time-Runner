@@ -130,6 +130,9 @@ public class GameManager : MonoBehaviour
                     case 3:
                         upTime = 12f;
                         break;
+                    case 4:
+                        upTime = 10f;
+                        break;
                     default:
                         upTime = 0;
                         break;
@@ -237,6 +240,13 @@ public class GameManager : MonoBehaviour
                                             $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
                                         $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
                         break;
+                    case 4:
+                        titleText.text = "S.Z.L.";
+                        guideText.text = "다양한 집라인에 탑승하세요";
+                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
+                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
+                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        break;
                 }
                 break;
             }
@@ -268,9 +278,9 @@ public class GameManager : MonoBehaviour
 
         switchTextAlpha.alpha = 0;
 
-        for (int i = 30; i > 0; i--)
+        for (int i = 40; i > 0; i--)
         {
-            switchTextAlpha.alpha += 0.05f;
+            switchTextAlpha.alpha += 0.03f;
             yield return new WaitForSeconds(0.01f);
         }
         yield return new WaitForSeconds(2f);

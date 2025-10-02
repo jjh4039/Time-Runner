@@ -3468,6 +3468,7 @@ MonoBehaviour:
     - {fileID: 1474910310061575065, guid: a54fbcfb156e87846add8718ce7b2f2a, type: 3}
     - {fileID: 1474910310061575065, guid: 3e983f59830ffef49b006c0bd67ee4d4, type: 3}
     - {fileID: 1474910310061575065, guid: 9db8ace4e11e65b48b8eb18e40356808, type: 3}
+    - {fileID: 4279903340807878022, guid: 07001f1d0fece79478e6d65b89305baa, type: 3}
   player: {fileID: 1363307015}
   stageClearDistance: 15
   currentStage: {fileID: 0}
