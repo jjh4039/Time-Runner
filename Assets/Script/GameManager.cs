@@ -342,11 +342,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator ZipLineCameraOffset(bool isZip)
     {
         if (isZip)
-            for (int i = 0; i < 5; i++)
-            {
-                cinemachineFollow.FollowOffset.y -= 0.2f;
-                yield return new WaitForFixedUpdate();
-            }
+            cinemachineFollow.FollowOffset.y -= 1f;
         else
         {
             for (int i = 0; i < 20; i++)
@@ -355,6 +351,8 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+
+        yield return new WaitForFixedUpdate();
     }
 
 
