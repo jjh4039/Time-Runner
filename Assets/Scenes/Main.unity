@@ -4064,7 +4064,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841180972}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -4145,8 +4145,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2DC\uAC04\uC758 \uD750\uB984\uC774 \uBE68\uB77C\uC9D1\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 101a985b0daecf941aa8485cffffe251, type: 2}
-  m_sharedMaterial: {fileID: 2236617501035310854, guid: 101a985b0daecf941aa8485cffffe251, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e86205bad4219224696360a1ce349f99, type: 2}
+  m_sharedMaterial: {fileID: -4462177624474672791, guid: e86205bad4219224696360a1ce349f99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
