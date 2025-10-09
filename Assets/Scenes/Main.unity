@@ -3453,6 +3453,7 @@ MonoBehaviour:
   currentLevel: 0
   switchLevelStagePrefabs:
   - {fileID: 4227164053456260221, guid: 4d06dc972cd8d1941bae40242f612551, type: 3}
+  - {fileID: 4227164053456260221, guid: 7f528ff5053ae154fb402a7ebbad2fc3, type: 3}
   stageArray:
   - stages:
     - {fileID: 4227164053456260221, guid: 9d738bbc1bde5bb40a7676df9da0dd6d, type: 3}
@@ -3469,6 +3470,8 @@ MonoBehaviour:
     - {fileID: 1474910310061575065, guid: 3e983f59830ffef49b006c0bd67ee4d4, type: 3}
     - {fileID: 1474910310061575065, guid: 9db8ace4e11e65b48b8eb18e40356808, type: 3}
     - {fileID: 4279903340807878022, guid: 07001f1d0fece79478e6d65b89305baa, type: 3}
+  - stages:
+    - {fileID: 1474910310061575065, guid: 37e81076c6ca2c64995f6d1853140ef1, type: 3}
   player: {fileID: 1363307015}
   stageClearDistance: 15
   currentStage: {fileID: 0}
@@ -4142,8 +4145,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC2DC\uAC04\uC758 \uD750\uB984\uC774 \uBE68\uB77C\uC9D1\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e86205bad4219224696360a1ce349f99, type: 2}
-  m_sharedMaterial: {fileID: -4462177624474672791, guid: e86205bad4219224696360a1ce349f99, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 101a985b0daecf941aa8485cffffe251, type: 2}
+  m_sharedMaterial: {fileID: 2236617501035310854, guid: 101a985b0daecf941aa8485cffffe251, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

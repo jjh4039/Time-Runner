@@ -17,22 +17,40 @@ public class SwitchLevel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             boxCollider2D.enabled = false;
-            StartCoroutine("UpLevel", 1);
+            StartCoroutine("UpLevel", GameManager.instance.stageManager.currentLevel);
         }
     }
 
-    IEnumerator UpLevel(int arrivalLevel)
+    IEnumerator UpLevel(int Level)
     {
-        for (int i = 0; i < 50; i++)
+        switch (Level)
         {
-            if (light2D.color.g <= 0.36f) light2D.color = new Color(light2D.color.r, light2D.color.g + 0.01f, light2D.color.b);
-            if (light2D.color.b <= 1f) light2D.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b + 0.02f);
-            
-            GameManager.instance.switchText.color = new Color(light2D.color.r, light2D.color.g + 0.2f, light2D.color.b, GameManager.instance.switchText.color.a);
-            GameManager.instance.subSwitchText.color = new Color(light2D.color.r, light2D.color.g + 0.2f, light2D.color.b, GameManager.instance.subSwitchText.color.a);
-            GameManager.instance.playerLight.light2d.color = light2D.color;
-            GameManager.stageColor = light2D.color;
-            yield return new WaitForSeconds(0.01f);
+            case 1:
+                for (int i = 0; i < 50; i++)
+                {
+                    if (light2D.color.g <= 0.36f) light2D.color = new Color(light2D.color.r, light2D.color.g + 0.01f, light2D.color.b);
+                    if (light2D.color.b <= 1f) light2D.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b + 0.02f);
+
+                    GameManager.instance.switchText.color = new Color(light2D.color.r, light2D.color.g + 0.2f, light2D.color.b, GameManager.instance.switchText.color.a);
+                    GameManager.instance.subSwitchText.color = new Color(light2D.color.r, light2D.color.g + 0.2f, light2D.color.b, GameManager.instance.subSwitchText.color.a);
+                    GameManager.instance.playerLight.light2d.color = light2D.color;
+                    GameManager.stageColor = light2D.color;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < 50; i++)
+                {
+                    if (light2D.color.g >= 0.3f) light2D.color = new Color(light2D.color.r, light2D.color.g - 0.01f, light2D.color.b);
+                    if (light2D.color.r >= 0.3f) light2D.color = new Color(light2D.color.r - 0.02f, light2D.color.g, light2D.color.b);
+
+                    GameManager.instance.switchText.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b, GameManager.instance.switchText.color.a);
+                    GameManager.instance.subSwitchText.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b, GameManager.instance.subSwitchText.color.a);
+                    GameManager.instance.playerLight.light2d.color = light2D.color;
+                    GameManager.stageColor = light2D.color;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                break;
         }
     }
 }

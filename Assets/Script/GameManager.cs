@@ -138,17 +138,31 @@ public class GameManager : MonoBehaviour
                         break;
                 }
                 break;
+            case 2: // 레벨3 시간
+                switch (index)
+                {
+                    case 0:
+                        upTime = 12f;
+                        break;
+                    default:
+                        upTime = 0;
+                        break;
+                }
+                break;
         }
         
         timeGuideText.text = "+" + upTime.ToString("F1") + "s";
 
         timeText.color = stageColor;
-        if (stageManager.currentLevel == 1) timeText.color = new Color(1f, 0.7f, 1f);  // 레벨2 임시;
+        if (stageManager.currentLevel == 1) timeText.color = new Color(1f, 0.7f, 1f);  // 레벨2 임시
+        if (stageManager.currentLevel == 2) timeText.color = new Color(0.3f, 0.6f, 1f);  // 레벨3 임시
+
         for (int i = 20; i > 0; i--)
         {
             timeRemaining += upTime / 20;
             yield return new WaitForSeconds(0.02f);
         }
+
         timeText.color = Color.white;
     }
 
@@ -156,7 +170,8 @@ public class GameManager : MonoBehaviour
     {
         string colorCode = ColorUtility.ToHtmlStringRGB(stageColor);
         titleText.color = stageColor;
-        if (stageManager.currentLevel == 1) titleText.color = new Color(1f, 0.7f, 1f, 0.2f); // 레벨2 임시;
+        if (stageManager.currentLevel == 1) titleText.color = new Color(1f, 0.7f, 1f, 0.2f); // 레벨2 임시
+        if (stageManager.currentLevel == 2) titleText.color = new Color(0.3f, 0.5f, 1f, 0.2f); // 레벨3 임시
         titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
         timeGuideText.color = titleText.color;
         switch (stageManager.currentLevel)
@@ -231,7 +246,7 @@ public class GameManager : MonoBehaviour
                         guideText.text = "스위치를 조작하여 집라인을 유지하세요";
                         keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
                                             $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
-                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";  
+                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
                         break;
                     case 3:
                         titleText.text = "Phase Track";
@@ -249,7 +264,20 @@ public class GameManager : MonoBehaviour
                         break;
                 }
                 break;
+            
+            case 2:
+            switch (index)
+            {
+                case 0:
+                    titleText.text = "Wire Action II";
+                    guideText.text = "와이어를 연결하고, 연속으로 점프하세요";
+                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
+                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    break;
             }
+            break;
+                
+        }
         StartCoroutine("GuideAlpha");
     }
     // 판정검사
@@ -272,23 +300,29 @@ public class GameManager : MonoBehaviour
                 switchText.text = "시간의 흐름이 빨라집니다.";
                 subSwitchText.text = "x1.2";
                 break;
+            case 1:
+                switchText.text = "시간이 끝을 향해 흐릅니다..";
+                subSwitchText.text = "x1.5";
+                break;
             default:
                 break;
         }
 
         switchTextAlpha.alpha = 0;
+        yield return new WaitForSeconds(0.2f);
 
         for (int i = 40; i > 0; i--)
         {
             switchTextAlpha.alpha += 0.03f;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.03f);
         }
-        yield return new WaitForSeconds(2f);
+
+        yield return new WaitForSeconds(1f);
 
         for (int i = 50; i > 0; i--)
         {
             switchTextAlpha.alpha -= 0.03f;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
 
