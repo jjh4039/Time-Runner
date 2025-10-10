@@ -41,7 +41,7 @@ public class SwitchLevel : MonoBehaviour
             case 2:
                 for (int i = 0; i < 50; i++)
                 {
-                    if (light2D.color.g >= 0.3f) light2D.color = new Color(light2D.color.r, light2D.color.g - 0.01f, light2D.color.b);
+                    if (light2D.color.g >= 0.4f) light2D.color = new Color(light2D.color.r, light2D.color.g - 0.01f, light2D.color.b);
                     if (light2D.color.r >= 0.3f) light2D.color = new Color(light2D.color.r - 0.02f, light2D.color.g, light2D.color.b);
 
                     GameManager.instance.switchText.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b, GameManager.instance.switchText.color.a);
