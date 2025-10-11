@@ -16,6 +16,15 @@ public class Gate : MonoBehaviour
         isShiftable = true;
     }
 
+    public void Update()
+    {
+        if (GameManager.instance.player.isRestart)
+        {
+            isShiftable = true;
+            Connected(false);
+        }
+    }
+
     public void Connected(bool isConnect)
     {
         if (isConnect)
@@ -61,7 +70,7 @@ public class Gate : MonoBehaviour
         GameManager.instance.playerLight.light2d.color = new Color(GameManager.instance.playerLight.light2d.color.r, GameManager.instance.playerLight.light2d.color.g,
             GameManager.instance.playerLight.light2d.color.b, 0f);
         GameManager.instance.player.spriteRenderer.color = new Color(GameManager.instance.player.spriteRenderer.color.r, GameManager.instance.player.spriteRenderer.color.g,
-    GameManager.instance.player.spriteRenderer.color.b, 1f);
+            GameManager.instance.player.spriteRenderer.color.b, 1f);
 
         GameManager.instance.player.animator.SetBool("isShift", false);
         GameManager.instance.player.animator.SetBool("Sliding", true);

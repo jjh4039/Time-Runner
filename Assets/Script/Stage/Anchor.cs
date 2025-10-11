@@ -29,6 +29,9 @@ public class Anchor : MonoBehaviour
                 case 1:
                     light2d.color = new Color(1f, 0.36f, 1f); // Magenta
                     break;
+                case 2:
+                    light2d.color = new Color(0.3f, 0.4f, 1f);
+                    break;
             }
             
             transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, newZ);

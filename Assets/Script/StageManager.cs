@@ -73,6 +73,7 @@ public class StageManager : MonoBehaviour
                     newStage = null;
                     break;
             }
+            recentNumbers.Clear();
 
             newStage.tag = "Stage" + stageCount;
             Transform endOfStage = newStage.transform.Find("EndOfStage");
@@ -84,9 +85,8 @@ public class StageManager : MonoBehaviour
         }
         else // 스테이지 생성
         {
-            
                     int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
-            /*
+
                     while (recentNumbers.Contains(randomIndex))
                     {
                         randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
@@ -97,7 +97,7 @@ public class StageManager : MonoBehaviour
                     {
                         recentNumbers.Dequeue();
                     }
-            */
+
                     string queueContents = string.Join(", ", recentNumbers.ToArray());
                     GameManager.instance.StartCoroutine("TimeUp", randomIndex); // 스테이지 클리어 시마다 시간 추가
 

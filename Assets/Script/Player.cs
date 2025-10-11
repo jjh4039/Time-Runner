@@ -292,6 +292,11 @@ public class Player : MonoBehaviour
             rigid.gravityScale = 2f;
             speed = 12f;
         }
+
+        if (isGrounded && speed != 12f && !isRestart && !isZip)
+        {
+            speed = 12f;
+        }
     }
 
     void LateUpdate()

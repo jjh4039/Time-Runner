@@ -1830,7 +1830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22.76, y: -13.58}
+  m_AnchoredPosition: {x: -61.55, y: -44.36}
   m_SizeDelta: {x: 2000, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1293220877
@@ -3471,7 +3471,9 @@ MonoBehaviour:
     - {fileID: 1474910310061575065, guid: 9db8ace4e11e65b48b8eb18e40356808, type: 3}
     - {fileID: 4279903340807878022, guid: 07001f1d0fece79478e6d65b89305baa, type: 3}
   - stages:
-    - {fileID: 1474910310061575065, guid: 37e81076c6ca2c64995f6d1853140ef1, type: 3}
+    - {fileID: 1474910310061575065, guid: c43dde5143fae6242aae83fd37867be5, type: 3}
+    - {fileID: 1774789977956186137, guid: f38af4633e807fe4ea7d12ea76f2638d, type: 3}
+    - {fileID: 5162389522211527458, guid: e9816691cf6e08b4c93d337d2bdc520e, type: 3}
   player: {fileID: 1363307015}
   stageClearDistance: 15
   currentStage: {fileID: 0}
