@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -55,19 +56,22 @@ public class StageManager : MonoBehaviour
         GameObject newStage;
 
         // SwitchLevel 스테이지 생성
-        if (stageCount == 1 || stageCount == 3) 
+        if (stageCount == 8 || stageCount == 14 || stageCount == 18) 
         {
+            GameManager.instance.isTime = false;
             switch (currentLevel)
             {
                 case 0:
                     newStage = Instantiate(switchLevelStagePrefabs[0], nextSpawnPoint, Quaternion.identity);
                     GameManager.instance.StartCoroutine("SwitchAlpha", 0);
+                    GameManager.instance.timeMagnification = 1.2f;
                     GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[1];
                     break;
                 case 1:
                     newStage = Instantiate(switchLevelStagePrefabs[1], nextSpawnPoint, Quaternion.identity);
                     GameManager.instance.StartCoroutine("SwitchAlpha", 1);
-                    // GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[2]; 와이어 추가해라ㅣ ㅇㅇ
+                    GameManager.instance.timeMagnification = 1.5f;
+                    GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[2];
                     break;
                 default:
                     newStage = null;
@@ -85,7 +89,8 @@ public class StageManager : MonoBehaviour
         }
         else // 스테이지 생성
         {
-                    int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
+            GameManager.instance.isTime = true;
+            int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
 
                     while (recentNumbers.Contains(randomIndex))
                     {

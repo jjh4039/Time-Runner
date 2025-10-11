@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     static public Color stageColor;
     public float timeRemaining;
     public bool isPerfect;
+    public bool isTime;
+    public float timeMagnification = 1f;
 
     [Header("Script")]
     public CinemachineCamera cinemachine;
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     public GameObject signPrefab;
     public GameObject[] minusPrefab;
     public RectTransform rectParent;
+   
 
     void Awake()
     {
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        timeRemaining -= Time.deltaTime;
+        if (isTime) timeRemaining -= Time.deltaTime * timeMagnification;
         timeText.text = timeRemaining.ToString("F1");
     }
 
@@ -86,29 +89,29 @@ public class GameManager : MonoBehaviour
                 switch (index)
                 {
                     case 0:
-                        upTime = 4.5f;
-                        break;
-                    case 1:
                         upTime = 5f;
                         break;
+                    case 1:
+                        upTime = 7f;
+                        break;
                     case 2:
-                        upTime = 6f;
+                        upTime = 7f;
                         break;
                     case 3:
-                        upTime = 12f;
+                        upTime = 14f;
                         password.StartCoroutine("CheckPassword");
                         break;
                     case 4:
-                        upTime = 12f;
+                        upTime = 14f;
                         break;
                     case 5:
-                        upTime = 7f;
+                        upTime = 9f;
                         break;
                     case 6:
-                        upTime = 13f;
+                        upTime = 12f;
                         break;
                     case 7:
-                        upTime = 8f;
+                        upTime = 9f;
                         break;
                     default:
                         upTime = 0;
@@ -119,19 +122,19 @@ public class GameManager : MonoBehaviour
                 switch (index)
                 {
                     case 0:
-                        upTime = 11f;
+                        upTime = 16f;
                         break;
                     case 1:
-                        upTime = 9f;
+                        upTime = 18f;
                         break;
                     case 2:
-                        upTime = 10f;
+                        upTime = 14f;
                         break;
                     case 3:
-                        upTime = 12f;
+                        upTime = 14f;
                         break;
                     case 4:
-                        upTime = 10f;
+                        upTime = 18f;
                         break;
                     default:
                         upTime = 0;
@@ -142,7 +145,13 @@ public class GameManager : MonoBehaviour
                 switch (index)
                 {
                     case 0:
-                        upTime = 12f;
+                        upTime = 42f;
+                        break;
+                    case 1:
+                        upTime = 38f;
+                        break;
+                    case 2:
+                        upTime = 44f;
                         break;
                     default:
                         upTime = 0;
@@ -269,8 +278,20 @@ public class GameManager : MonoBehaviour
             switch (index)
             {
                 case 0:
-                    titleText.text = "Wire Action II";
-                    guideText.text = "와이어를 연결하고, 연속으로 점프하세요";
+                    titleText.text = ".Zip";
+                    guideText.text = "집라인을 극한으로 활용하세요";
+                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
+                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    break;
+                case 1:
+                    titleText.text = "Shift Road";
+                    guideText.text = "끊임없이 게이트를 찾아 이동하세요";
+                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
+                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    break;
+                case 2:
+                    titleText.text = "Switch.";
+                    guideText.text = "오직 스위치지만.. 집중하세요";
                     keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
                                         $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
                     break;

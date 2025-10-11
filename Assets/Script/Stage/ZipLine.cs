@@ -93,7 +93,7 @@ public class ZipLine : MonoBehaviour
         if (nowStop == false)
         {
             zip.transform.position = new Vector3(endPos.position.x, endPos.position.y - 0.6f, endPos.position.z);
-            GameManager.instance.player.rigid.linearVelocity = new Vector2(GameManager.instance.player.rigid.linearVelocity.x, GameManager.instance.player.jumpForce);
+            GameManager.instance.player.rigid.linearVelocity = new Vector2(GameManager.instance.player.rigid.linearVelocity.x, GameManager.instance.player.jumpForce + 0.1f); // ¿”Ω√ §∑§µ§∑
             GameManager.instance.StartCoroutine("ZipLineCameraOffset", false);
         }
     }

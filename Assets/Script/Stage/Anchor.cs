@@ -7,6 +7,9 @@ public class Anchor : MonoBehaviour
     public Light2D light2d;
     public int tmplevel;
 
+    [SerializeField]
+    private float rotationSpeed = 200f;
+
     void Awake()
     {
         isWire = false;
@@ -17,8 +20,8 @@ public class Anchor : MonoBehaviour
     {
         if (isWire)
         {
-            Vector3 currentRotation = transform.rotation.eulerAngles;
-            float newZ = currentRotation.z + 1f;
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, 0, rotationAmount);
 
             switch //(GameManager.instance.stageManager.currentLevel)
                 (tmplevel)
@@ -33,8 +36,6 @@ public class Anchor : MonoBehaviour
                     light2d.color = new Color(0.3f, 0.4f, 1f);
                     break;
             }
-            
-            transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, newZ);
         }
         else
         {

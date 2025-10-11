@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     public float groundCheckRadius;
 
     void Awake()
-    { 
+    {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -56,10 +56,10 @@ public class Player : MonoBehaviour
     }
 
     // 이동 시작
-    public void OnMove(InputAction.CallbackContext context) 
+    public void OnMove(InputAction.CallbackContext context)
     {
         if (context.performed && isRestart)
-        { 
+        {
             isMove = true;
             isRestart = false;
             speed = 12f;
@@ -208,12 +208,6 @@ public class Player : MonoBehaviour
         }
         else if (connectedGate != null) connectedGate.Connected(false);
 
-        if (joint.enabled)
-        {
-            // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
-            lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y + 0.2f));
-        }
-
         // 임시 집라인 매커니즘 + Late Update
         if (isZip)
         {
@@ -271,8 +265,8 @@ public class Player : MonoBehaviour
         // 와이어 액션
         if (joint.enabled)
         {
-            GetComponent<Rigidbody2D>().AddForce(transform.up * -5f);
-            GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
+            // GetComponent<Rigidbody2D>().AddForce(transform.up * -5f);
+            // GetComponent<Rigidbody2D>().AddForce(transform.right * 1f);
         }
 
         // 기초 이동 (비와이어 상태)
@@ -301,6 +295,12 @@ public class Player : MonoBehaviour
 
     void LateUpdate()
     {
+        if (joint.enabled)
+        {
+            // LineRenderer의 시작점 위치를 매 프레임마다 업데이트
+            lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y + 0.2f));
+        }
+
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
         animator.SetBool("Jump", !isGrounded);
 
