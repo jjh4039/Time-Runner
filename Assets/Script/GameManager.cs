@@ -325,6 +325,10 @@ public class GameManager : MonoBehaviour
                 switchText.text = "시간이 끝을 향해 흐릅니다..";
                 subSwitchText.text = "x1.5";
                 break;
+            case 2:
+                switchText.text = "마지막을 향해";
+                subSwitchText.text = "x1.5";
+                break;
             default:
                 break;
         }

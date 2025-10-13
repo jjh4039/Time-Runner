@@ -68,6 +68,11 @@ public class Trigger : MonoBehaviour
                 StartCoroutine("CameraZoom", false);
                 boxCollider2D.enabled = false;
                 break;
+            case 6:
+                // 마지막 스테이지 전 페이드인
+                StartCoroutine("OnlyFade");
+                boxCollider2D.enabled = false;
+                break;
         }
     }
 
@@ -130,5 +135,22 @@ public class Trigger : MonoBehaviour
         }
 
         GameManager.instance.screenAlpha.alpha = 0f;
+    }
+
+    IEnumerator OnlyFade()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            GameManager.instance.screenAlpha.alpha += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        for (int i = 0; i < 101; i++)
+        {
+            GameManager.instance.screenAlpha.alpha -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }

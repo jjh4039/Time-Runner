@@ -3456,6 +3456,7 @@ MonoBehaviour:
   currentLevel: 0
   switchLevelStagePrefabs:
   - {fileID: 4227164053456260221, guid: 4d06dc972cd8d1941bae40242f612551, type: 3}
+  - {fileID: 4227164053456260221, guid: 02450f2259a59e74381eb7d7a50279ad, type: 3}
   - {fileID: 4227164053456260221, guid: 7f528ff5053ae154fb402a7ebbad2fc3, type: 3}
   stageArray:
   - stages:

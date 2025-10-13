@@ -51,6 +51,18 @@ public class SwitchLevel : MonoBehaviour
                     yield return new WaitForSeconds(0.01f);
                 }
                 break;
+            case 3:
+                for (int i = 0; i < 50; i++)
+                {
+                    if (light2D.color.g <= 1f) light2D.color = new Color(light2D.color.r + 0.02f, light2D.color.g + 0.02f, light2D.color.b + 0.02f);
+
+                    GameManager.instance.switchText.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b, GameManager.instance.switchText.color.a);
+                    GameManager.instance.subSwitchText.color = new Color(light2D.color.r, light2D.color.g, light2D.color.b, GameManager.instance.subSwitchText.color.a);
+                    GameManager.instance.playerLight.light2d.color = light2D.color;
+                    GameManager.stageColor = light2D.color;
+                    yield return new WaitForSeconds(0.01f);
+                }
+                break;
         }
     }
 }

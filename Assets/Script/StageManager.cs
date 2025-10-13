@@ -55,8 +55,9 @@ public class StageManager : MonoBehaviour
     {
         GameObject newStage;
 
-        // SwitchLevel 스테이지 생성
-        if (stageCount == 8 || stageCount == 14 || stageCount == 18) 
+      
+        // SwitchLevel 스테이지 생성 ( m / n / n + 4 )
+        if (stageCount == 1 || stageCount == 3 || stageCount == 5) 
         {
             GameManager.instance.isTime = false;
             switch (currentLevel)
@@ -72,6 +73,12 @@ public class StageManager : MonoBehaviour
                     GameManager.instance.StartCoroutine("SwitchAlpha", 1);
                     GameManager.instance.timeMagnification = 1.5f;
                     GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[2];
+                    break;
+                case 2:
+                    newStage = Instantiate(switchLevelStagePrefabs[2], nextSpawnPoint, Quaternion.identity);
+                    GameManager.instance.StartCoroutine("SwitchAlpha", 2);
+                    GameManager.instance.timeMagnification = 1f;
+                    // GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[3];
                     break;
                 default:
                     newStage = null;
