@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     static public int stageNumber;
     static public Color stageColor;
     public float timeRemaining;
+    public float finalPerFloat;
     public bool isPerfect;
     public bool isTime;
     public float timeMagnification = 1f;
@@ -38,9 +39,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI restartText;
     public TextMeshProUGUI switchText;
     public TextMeshProUGUI subSwitchText;
+    public TextMeshProUGUI finalPerText;
     public CanvasGroup switchTextAlpha;
     public CanvasGroup keyGuideAlpha;
     public CanvasGroup guideTextAlpha;
+    public CanvasGroup finalPerTextAlpha;
     public GameObject signPrefab;
     public GameObject[] minusPrefab;
     public RectTransform rectParent;
@@ -59,6 +62,12 @@ public class GameManager : MonoBehaviour
     {
         if (isTime) timeRemaining -= Time.deltaTime * timeMagnification;
         timeText.text = timeRemaining.ToString("F1");
+
+        if (finalPerTextAlpha.alpha >= 1f)
+        {
+            finalPerFloat += Time.deltaTime;
+            finalPerText.text = finalPerFloat.ToString("F1") + "%";
+        }
     }
 
     IEnumerator TimeDown(float downTime)

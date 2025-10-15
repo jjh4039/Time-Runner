@@ -35,11 +35,16 @@ public class Anchor : MonoBehaviour
                 case 2:
                     light2d.color = new Color(0.3f, 0.4f, 1f);
                     break;
+                case 3:
+                    light2d.color = Color.white;
+                    light2d.intensity = 0.9f;
+                    break;
             }
         }
         else
         {
             light2d.color = Color.white;
+            light2d.intensity = 0.5f;
         }
     }
 }
