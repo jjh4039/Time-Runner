@@ -145,11 +145,11 @@ public class Trigger : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
-        for (int i = 0; i < 101; i++)
+        for (int i = 0; i < 51; i++)
         {
-            GameManager.instance.screenAlpha.alpha -= 0.01f;
+            GameManager.instance.screenAlpha.alpha -= 0.02f;
             yield return new WaitForSeconds(0.01f);
         }
     }

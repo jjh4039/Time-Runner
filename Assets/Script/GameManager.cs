@@ -326,8 +326,8 @@ public class GameManager : MonoBehaviour
                 subSwitchText.text = "x1.5";
                 break;
             case 2:
-                switchText.text = "마지막을 향해";
-                subSwitchText.text = "x1.5";
+                switchText.text = "시간의 진실에 도달했습니다.";
+                subSwitchText.text = "Final Stage";
                 break;
             default:
                 break;

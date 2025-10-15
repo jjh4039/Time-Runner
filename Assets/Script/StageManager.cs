@@ -78,7 +78,7 @@ public class StageManager : MonoBehaviour
                     newStage = Instantiate(switchLevelStagePrefabs[2], nextSpawnPoint, Quaternion.identity);
                     GameManager.instance.StartCoroutine("SwitchAlpha", 2);
                     GameManager.instance.timeMagnification = 1f;
-                    // GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[3];
+                    GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[3];
                     break;
                 default:
                     newStage = null;
