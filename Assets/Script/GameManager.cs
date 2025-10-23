@@ -15,9 +15,11 @@ public class GameManager : MonoBehaviour
     static public int stageNumber;
     static public Color stageColor;
     public float timeRemaining;
+    public float heart;
     public float finalPerFloat;
     public bool isPerfect;
     public bool isTime;
+    public bool isFinal;
     public float timeMagnification = 1f;
 
     [Header("Script")]
@@ -47,7 +49,8 @@ public class GameManager : MonoBehaviour
     public GameObject signPrefab;
     public GameObject[] minusPrefab;
     public RectTransform rectParent;
-   
+    public GameObject[] finalChecker;
+
 
     void Awake()
     {
@@ -61,11 +64,21 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (isTime) timeRemaining -= Time.deltaTime * timeMagnification;
-        timeText.text = timeRemaining.ToString("F1");
+        if (!isFinal) timeText.text = timeRemaining.ToString("F1");
+        else timeText.text = "♥ : " + heart;
 
-        if (finalPerTextAlpha.alpha >= 1f)
+        // 최종 스테이지 퍼센트 계산
+        if (finalPerTextAlpha.alpha >= 1f && player.transform.position.x >= finalChecker[0].transform.position.x)
         {
-            finalPerFloat += Time.deltaTime;
+            float goal = finalChecker[0].transform.position.x - finalChecker[1].transform.position.x;
+            float playerStartDistance = finalChecker[0].transform.position.x - player.transform.position.x;
+
+            float goalDistance = Mathf.Abs(finalChecker[0].transform.position.x - finalChecker[1].transform.position.x);
+            float movedDistance = Mathf.Abs(finalChecker[0].transform.position.x - player.transform.position.x);
+
+            finalPerFloat = (movedDistance / goalDistance) * 100f;
+            if (finalPerFloat >= 100f) finalPerFloat = 100f;
+
             finalPerText.text = finalPerFloat.ToString("F1") + "%";
         }
     }
@@ -74,14 +87,19 @@ public class GameManager : MonoBehaviour
     {
 
         // 텍스트 생성 (Damage)
-        Instantiate(minusPrefab[(int)downTime], new Vector2(UnityEngine.Random.Range(0f, 0f), 480f), Quaternion.identity).transform.SetParent(rectParent, false);
+        if (!isFinal) Instantiate(minusPrefab[(int)downTime], new Vector2(UnityEngine.Random.Range(0f, 0f), 480f), Quaternion.identity).transform.SetParent(rectParent, false);
 
         // 시간 감소
         timeText.color = Color.red;
-        for (int i = 10; i > 0; i--)
-        {
+        if (!isFinal)
+            for (int i = 10; i > 0; i--)
+            {
             GameManager.instance.timeRemaining -= downTime / 10;
             yield return new WaitForSeconds(0.01f);
+            }
+        else
+        {
+            GameManager.instance.heart -= 1;
         }
         timeText.color = Color.white;
     }
@@ -336,7 +354,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 2:
                 switchText.text = "시간의 진실에 도달했습니다.";
-                subSwitchText.text = "Final Stage";
+                subSwitchText.text = "♥ = 10s";
                 break;
             default:
                 break;

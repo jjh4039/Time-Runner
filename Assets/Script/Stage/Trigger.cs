@@ -71,8 +71,37 @@ public class Trigger : MonoBehaviour
             case 6:
                 // 마지막 스테이지 전 페이드인
                 StartCoroutine("OnlyFade");
+                StartCoroutine("Heart");
+                GameManager.instance.finalChecker[0] = GameObject.FindWithTag("Start");
+                GameManager.instance.finalChecker[1] = GameObject.FindWithTag("End");
                 boxCollider2D.enabled = false;
                 break;
+            case 7:
+                break;
+        }
+    }
+
+    IEnumerator Heart()
+    {
+        while (!GameManager.instance.isFinal)
+        {
+            if (GameManager.instance.timeRemaining >= 10f)
+            {
+                GameManager.instance.timeText.color = Color.greenYellow;
+                GameManager.instance.heart += 1;
+                GameManager.instance.timeRemaining -= 10f;
+                yield return new WaitForSeconds(0.05f);
+                GameManager.instance.timeText.color = Color.white;
+                // 사운드 ㄱㄱ
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            else
+            {
+                // 사운드2 ㄱㄱ
+                yield return new WaitForSeconds(0.35f);
+                GameManager.instance.isFinal = true;
+            }        
         }
     }
 
@@ -119,7 +148,14 @@ public class Trigger : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        GameManager.instance.StartCoroutine("TimeDown", 2f);
+        if (!GameManager.instance.isFinal) 
+        { 
+            GameManager.instance.StartCoroutine("TimeDown", 2f);
+        }
+        else if (GameManager.instance.heart >= 1){
+            GameManager.instance.StartCoroutine("TimeDown", 2f);
+        }
+
         GameManager.instance.player.rigid.linearVelocity = Vector2.zero;
         GameManager.instance.player.moveInput = Vector2.zero;
         GameManager.instance.player.transform.position = respawnPoint.position;
@@ -129,10 +165,10 @@ public class Trigger : MonoBehaviour
         GameManager.instance.StartCoroutine("RestartText");
 
         for (int i = 0; i < 20; i++)
-        {
-            GameManager.instance.screenAlpha.alpha -= 0.05f;
-            yield return new WaitForSeconds(0.01f);
-        }
+            {
+                GameManager.instance.screenAlpha.alpha -= 0.05f;
+                yield return new WaitForSeconds(0.01f);
+            }
 
         GameManager.instance.screenAlpha.alpha = 0f;
     }

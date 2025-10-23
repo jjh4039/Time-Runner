@@ -57,7 +57,7 @@ public class StageManager : MonoBehaviour
 
       
         // SwitchLevel 스테이지 생성 ( m / n / n + 4 )
-        if (stageCount == 1 || stageCount == 3 || stageCount == 5) 
+        if (stageCount == 0 || stageCount == 3 || stageCount == 5) 
         {
             GameManager.instance.isTime = false;
             switch (currentLevel)
