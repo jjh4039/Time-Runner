@@ -8,6 +8,8 @@ public class Gate : MonoBehaviour
     public Light2D light2D;
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider2D;
+    public GameObject gateEffect;
+    public Material[] effectLevel;
 
     public bool isShiftable;
 
@@ -81,7 +83,16 @@ public class Gate : MonoBehaviour
             GameManager.instance.playerLight.light2d.color = new Color(GameManager.instance.playerLight.light2d.color.r, GameManager.instance.playerLight.light2d.color.g,
                 GameManager.instance.playerLight.light2d.color.b, GameManager.instance.playerLight.light2d.color.a + 0.025f);
             yield return new WaitForSeconds(0.003f);
+
+            // ¿Ã∆Â∆Æ √‚∑¬
+            if (i == 20)
+            {
+                GameObject nowEffect = Instantiate(GameManager.instance.gateEffect, this.transform.position, Quaternion.identity);
+                ParticleSystemRenderer nowParticle = nowEffect.GetComponent<ParticleSystemRenderer>();
+                nowParticle.material = GameManager.instance.gateMaterial[GameManager.instance.stageManager.currentLevel];
+                Destroy(nowEffect, 3f);
+            }
         }
-        GameManager.instance.screenAlpha.alpha = 0f;
+            GameManager.instance.screenAlpha.alpha = 0f;
     }
 }

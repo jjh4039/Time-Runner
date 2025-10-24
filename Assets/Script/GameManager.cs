@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] minusPrefab;
     public RectTransform rectParent;
     public GameObject[] finalChecker;
+    public Material[] gateMaterial;
+    public GameObject gateEffect;
 
 
     void Awake()
