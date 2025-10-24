@@ -601,6 +601,12 @@ MonoBehaviour:
   finalChecker:
   - {fileID: 0}
   - {fileID: 0}
+  gateMaterial:
+  - {fileID: 2100000, guid: 70707f2f72aa4ae45949b9c6073fe9d6, type: 2}
+  - {fileID: 2100000, guid: 4d6ae9c4580b0e14098472450ed84d99, type: 2}
+  - {fileID: 2100000, guid: b597cd14fac535d4d969bd0388eb3c7d, type: 2}
+  - {fileID: 2100000, guid: 5f5ac8fcbfa7b294a808e16e333fa1d4, type: 2}
+  gateEffect: {fileID: 762648643371469397, guid: bddbbefd67c2c7d439848d6e9e8ad8ec, type: 3}
 --- !u!1 &486255139
 GameObject:
   m_ObjectHideFlags: 0
