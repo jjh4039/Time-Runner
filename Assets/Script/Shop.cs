@@ -14,20 +14,49 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        SetDes();
+
         myCost.text = "º¸À¯ PP : " + DB.instance.perfectCount.ToString();
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             skillIndexV--;
             if (skillIndexV < 0)
                 skillIndexV = 3;
+            skillIndexH = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             skillIndexV++;
             if (skillIndexV > 3)
                 skillIndexV = 0;
+            skillIndexH = 0;
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (skillIndexV != 0)
+            {
+                if (skillIndexH > 0)
+                {
+                    skillIndexH--;
+                }
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (skillIndexV != 0)
+            {
+                if (skillIndexH < 1)
+                {
+                    skillIndexH++;
+                }
+            }
+        }
+    }
+
+    void SetDes()
+    {
 
     }
 }
