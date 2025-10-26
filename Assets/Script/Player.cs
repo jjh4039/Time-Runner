@@ -95,7 +95,6 @@ public class Player : MonoBehaviour
             if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
-                GameManager.instance.db.jumpCount++;
             }
 
             // АјАн
