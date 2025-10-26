@@ -87,9 +87,10 @@ public class Gate : MonoBehaviour
             // ¿Ã∆Â∆Æ √‚∑¬
             if (i == 20)
             {
-                GameObject nowEffect = Instantiate(GameManager.instance.gateEffect, this.transform.position, Quaternion.identity);
+                GameObject nowEffect = Instantiate(GameManager.instance.gateEffect, new Vector3(this.transform.position.x, this.transform.position.y, 0f), Quaternion.Euler(-90f, 0, 0));
                 ParticleSystemRenderer nowParticle = nowEffect.GetComponent<ParticleSystemRenderer>();
                 nowParticle.material = GameManager.instance.gateMaterial[GameManager.instance.stageManager.currentLevel];
+                nowEffect.GetComponent<ParticleSystem>().Play();
                 Destroy(nowEffect, 3f);
             }
         }

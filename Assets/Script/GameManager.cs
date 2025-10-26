@@ -220,44 +220,42 @@ public class GameManager : MonoBehaviour
                     case 0:
                         titleText.text = "Only Run";
                         guideText.text = "오로지 달리세요";
-                        keyGuideText.text = $"달리기 : [ <color=#{colorCode}>D</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ ]";
                         break;
                     case 1:
                         titleText.text = "Triple Jump";
                         guideText.text = "3번 점프하세요";
-                        keyGuideText.text = $"점프 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ ]";
                         break;
                     case 2:
                         titleText.text = "Grapple Hook";
                         guideText.text = "와이어를 연결하여 돌파하세요";
-                        keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                            $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Wire</color> ]";
                         break;
                     case 3:
                         titleText.text = "Password";
                         guideText.text = "비밀번호를 입력하세요";
-                        keyGuideText.text = $"비밀번호 입력 : [ <color=#{colorCode}>Number Pad</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Password</color> ]";
                         break;
                     case 4:
                         titleText.text = "Lazer Quiver";
                         guideText.text = "돌파하고, 파괴하세요";
-                        keyGuideText.text = $"공격 / 연속 공격 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Attack</color> ]";
                         break;
                     case 5:
                         titleText.text = "Logic Gate";
                         guideText.text = "스위치를 조작하여 돌파하세요";
-                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Switch</color> ]";
                         break;
                     case 6:
                         titleText.text = "Zip-Line";
                         guideText.text = "집라인을 탑승하여 돌파하세요";
-                        keyGuideText.text = $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Zip-Line</color> ]";
                         break;
                     case 7:
                         titleText.text = "Shift-Gate";
                         guideText.text = "게이트를 찾고, 빠르게 이동하세요";
-                        keyGuideText.text = $"텔레포트 : [ <color=#{colorCode}>Shift</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Gate</color> ]";
                         break;
                     default:
                         titleText.text = "";
@@ -270,35 +268,27 @@ public class GameManager : MonoBehaviour
                     case 0:
                         titleText.text = "Wire Action";
                         guideText.text = "와이어를 연결하고, 연속으로 점프하세요";
-                        keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                            $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Wire</color> ]";
                         break;
                     case 1:
                         titleText.text = "Logic Leap";
                         guideText.text = "스위치로 벽과 발판을 조작하세요";
-                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Switch</color> ]";
                         break;
                     case 2:
                         titleText.text = "Control Circuit";
                         guideText.text = "스위치를 조작하여 집라인을 유지하세요";
-                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
-                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Switch, Zip-Line</color> ]";
                         break;
                     case 3:
                         titleText.text = "Phase Track";
                         guideText.text = "게이트로 이동하고, 와이어를 탑승하세요";
-                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
-                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Gate, Wire</color> ]";
                         break;
                     case 4:
                         titleText.text = "S.Z.L.";
                         guideText.text = "다양한 집라인에 탑승하세요";
-                        keyGuideText.text = $"스위치 ON : [ <color=#{colorCode}>W</color> ]\n" +
-                                            $"스위치 OFF : [ <color=#{colorCode}>S</color> ]\n" +
-                                        $"집라인 해제 : [ <color=#{colorCode}>Space</color> ]";
+                        keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Zip-Line</color> ]";
                         break;
                 }
                 break;
@@ -309,20 +299,17 @@ public class GameManager : MonoBehaviour
                 case 0:
                     titleText.text = ".Zip";
                     guideText.text = "집라인을 극한으로 활용하세요";
-                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Zip-Line, Switch</color> ]";
                     break;
                 case 1:
                     titleText.text = "Shift Road";
                     guideText.text = "끊임없이 게이트를 찾아 이동하세요";
-                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Gate, Zip-Line, Switch, Wire</color> ]";
                     break;
                 case 2:
                     titleText.text = "Switch.";
                     guideText.text = "오직 스위치지만.. 집중하세요";
-                    keyGuideText.text = $"와이어 연결 : [ <color=#{colorCode}>Left Click</color> ]\n" +
-                                        $"점프, 와이어 해제 : [ <color=#{colorCode}>Space</color> ]";
+                    keyGuideText.text = $"스테이지 기믹 : [ <color=#{colorCode}>Switch</color> ]";
                     break;
             }
             break;
@@ -336,6 +323,7 @@ public class GameManager : MonoBehaviour
         if (isPerfect == true)
         {
             Instantiate(signPrefab, Vector2.zero, Quaternion.identity).transform.SetParent(rectParent, false);
+            timeRemaining += 0.5f;
             db.continuePerfect++;
             yield return new WaitForSeconds(0f);
         }

@@ -54,12 +54,12 @@ public class StageManager : MonoBehaviour
     void SpawnStage()
     {
         GameObject newStage;
-
       
         // SwitchLevel 스테이지 생성 ( m / n / n + 4 )
-        if (stageCount == 0 || stageCount == 3 || stageCount == 5) 
+        if (stageCount == 2 || stageCount == 4 || stageCount == 6) 
         {
             GameManager.instance.isTime = false;
+            GameManager.instance.keyGuideText.text = "";
             switch (currentLevel)
             {
                 case 0:
