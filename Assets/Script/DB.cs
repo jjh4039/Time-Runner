@@ -8,9 +8,11 @@ public class DB : MonoBehaviour
     [Header("Total Data")]
     public int deathCount;
     public int perfectCount;
+    public bool[] isBuy;
 
     void Awake()
     {
+        isBuy = new bool[7] { false, false, false, false, false, false, false };
         instance = this;
     }
 }
