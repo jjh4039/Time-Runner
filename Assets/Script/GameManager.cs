@@ -61,6 +61,10 @@ public class GameManager : MonoBehaviour
         isPerfect = false;
         stageIndex = 0;
         stageColor = new Color(1f, 0.5f, 0.5f); // Red
+        screenAlpha.alpha = 1f;
+
+        
+        StartCoroutine(StartAlphaSet());
     }
 
     void Update()
@@ -85,6 +89,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator StartAlphaSet()
+    {
+        yield return new WaitForSeconds(0.3f);
+        StartCoroutine(SwitchAlpha(3));
+        for (int i = 50; i > 0; i--)
+        {
+            screenAlpha.alpha -= 0.02f;
+            yield return new WaitForSeconds(0.03f);
+        }
+    }
+    
     IEnumerator TimeDown(float downTime)
     {
 
@@ -335,6 +350,8 @@ public class GameManager : MonoBehaviour
         switch (index)
         {
            case 0:
+                switchText.color = new Color(1f, 0f, 0f, 0.3f);
+                subSwitchText.color = new Color(1f, 0f, 0f, 0.3f);
                 switchText.text = "시간의 흐름이 빨라집니다.";
                 subSwitchText.text = "x1.2";
                 break;
@@ -345,6 +362,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 switchText.text = "시간의 진실에 도달했습니다.";
                 subSwitchText.text = "♥ = 10s";
+                break;
+            case 3:
+                switchText.text = "보안 프로토콜 활성화.";
+                subSwitchText.text = "x1.0";
                 break;
             default:
                 break;

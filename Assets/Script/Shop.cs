@@ -3,6 +3,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements.Experimental;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -12,10 +14,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public TextMeshProUGUI myCost;
     public GameObject arrow;
     public TextMeshProUGUI arrowText;
+    public TextMeshProUGUI readyText;
     public SpriteRenderer Tree;
     public Sprite[] TreeSprites;
+    public CanvasGroup alphaScreen;
+    public float readying;
     public int selectIndex;
-    public int[] buyCost = {5,10,12,20,25,35,50};
+
+    public int[] buyCost = { 5, 10, 12, 20, 25, 35, 50 };
 
     public int skillIndexV;
     public int skillIndexH;
@@ -33,6 +39,42 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 Tree.sprite = TreeSprites[i];
                 break;
             }
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            readying += Time.deltaTime * 200f;
+        }
+        else
+        {
+            if (readying > 0)
+            {
+                readying -= Time.deltaTime * 300f;
+            }
+        }
+
+        if (readying <= 100)
+        {
+            readyText.text = "[ D ] 키를 눌러 출발하세요 - □ □ □";
+        }
+        else if (readying <= 200)
+        {
+            readyText.text = "[ D ] 키를 눌러 출발하세요 - ■ □ □";
+        }
+        else if (readying <= 300)
+        {
+            readyText.text = "[ D ] 키를 눌러 출발하세요 - ■ ■ □";
+        }
+        else if (readying <= 400)
+        {
+            readyText.text = "[ D ] 키를 눌러 출발하세요 - ■ ■ ■";
+        }
+        else if (readying <= 500)
+        {
+            readyText.color = Color.white;
+            readyText.text = "출발합니다.";
+            readying = 3000f;
+            StartCoroutine(GameStart());
         }
 
         switch (skillIndexV)
@@ -95,7 +137,25 @@ public class NewMonoBehaviourScript : MonoBehaviour
         }
     }
 
-    void SetDes()
+    IEnumerator GameStart()
+    {
+        AsyncOperation asyncOp;
+        
+        asyncOp = SceneManager.LoadSceneAsync(2);
+        asyncOp.allowSceneActivation = false;
+
+        alphaScreen.alpha = 0f;
+
+        for (int i = 0; i < 40; i++)
+        {
+            alphaScreen.alpha += 0.025f;
+            yield return new WaitForSeconds(0.03f);
+        }
+
+        asyncOp.allowSceneActivation = true;
+    }
+        
+        void SetDes()
     {
         switch (skillIndexV)
         {

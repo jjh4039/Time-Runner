@@ -25,8 +25,7 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-        nextSpawnPoint = Vector3.zero;
-        SpawnStage();
+        nextSpawnPoint = new Vector3(63f, 0f, 0f);
         currentLevel = 0;
     }
 
@@ -51,12 +50,12 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    void SpawnStage()
+    public void SpawnStage()
     {
         GameObject newStage;
       
         // SwitchLevel 스테이지 생성 ( m / n / n + 4 )
-        if (stageCount == 2 || stageCount == 4 || stageCount == 6) 
+        if (stageCount == 8 || stageCount == 14 || stageCount == 18) 
         {
             GameManager.instance.isTime = false;
             GameManager.instance.keyGuideText.text = "";

@@ -41,11 +41,11 @@ public class TitleScene : MonoBehaviour
     {
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            if (i == selectIndex) selectTexts[i].color = new Color(0.1f, 0.7f, 0.7f);
+            if (i == selectIndex) selectTexts[i].color = new Color(0.72f, 0.1f, 0.1f);
             else selectTexts[i].color = new Color(0.7f, 0.7f, 0.7f);
         }
 
-        selectIndexText.transform.position = new Vector3(selectIndexText.transform.position.x, selectTexts[selectIndex].transform.position.y, selectIndexText.transform.position.z);
+        selectIndexText.transform.position = new Vector3(selectIndexText.transform.position.x, selectTexts[selectIndex].transform.position.y + 2f, selectIndexText.transform.position.z);
     }
 
     IEnumerator BGAlpha()

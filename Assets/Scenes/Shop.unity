@@ -154,6 +154,7 @@ MonoBehaviour:
   myCost: {fileID: 1999206704}
   arrow: {fileID: 543743598}
   arrowText: {fileID: 543743602}
+  readyText: {fileID: 1271883186}
   Tree: {fileID: 787551129}
   TreeSprites:
   - {fileID: 21300000, guid: 0b8fa2d36bdbf794ea4060ac5f506ed7, type: 3}
@@ -163,6 +164,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 08ed03e0c7500984083f086d8fab53d4, type: 3}
   - {fileID: 21300000, guid: 61a0d3fa20563aa49ba049686eff27d9, type: 3}
   - {fileID: 21300000, guid: 642e0803baf97f7448e924b738eb2b07, type: 3}
+  alphaScreen: {fileID: 2011076022}
+  readying: 0
   selectIndex: 0
   buyCost: 050000000a0000000c00000014000000190000002300000032000000
   skillIndexV: 0
@@ -1463,7 +1466,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2011076019}
   - {fileID: 2106143834}
   - {fileID: 1517017240}
   - {fileID: 1545339499}
@@ -1472,6 +1474,7 @@ RectTransform:
   - {fileID: 1008286506}
   - {fileID: 543743599}
   - {fileID: 1271883183}
+  - {fileID: 2011076019}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1493,7 +1496,7 @@ GameObject:
   - component: {fileID: 1271883185}
   - component: {fileID: 1271883184}
   m_Layer: 5
-  m_Name: StartText
+  m_Name: Ready Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1896,8 +1899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a7c53a789d00e4fb76e9bd1815878b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathCount: 0
-  perfectCount: 500
+  deathCount: 5
+  perfectCount: 0
   isBuy: 
 --- !u!4 &1473275839
 Transform:
@@ -2933,7 +2936,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
