@@ -26,6 +26,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public int skillIndexV;
     public int skillIndexH;
 
+    private void Awake()
+    {
+        StartCoroutine(ShopStart());
+    }
 
     void Update()
     {
@@ -134,6 +138,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     skillIndexH++;
                 }
             }
+        }
+    }
+
+    IEnumerator ShopStart()
+    {
+        alphaScreen.alpha = 1f;
+        for (int i = 0; i < 40; i++)
+        {
+            alphaScreen.alpha -= 0.025f;
+            yield return new WaitForSeconds(0.03f);
         }
     }
 

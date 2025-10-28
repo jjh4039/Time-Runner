@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public Gate connectedGate;
     public Anchor connectedAnchor;
 
+
     public Vector2 mousePos;
     public RaycastHit2D hit;
 
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public bool isRestart;
     public bool isZip;
+    public bool isDie;
     public GameObject playerAttack;
     public enum PlayerSpaceMode { jump, attack, both }
     public PlayerSpaceMode playerSpaceMode;
@@ -41,6 +43,8 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+
+        isDie = false;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -195,8 +199,28 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+
+
     void Update()
     {
+        if (GameManager.instance.timeRemaining < 0f && !isDie)
+        {
+            isDie = true;
+            GameManager.instance.timeRemaining = 1000f;
+        }
+
+        if (isDie)
+        {
+            animator.SetBool("Die", true);
+            rigid.linearVelocity = Vector2.zero;
+            rigid.angularVelocity = 0f;
+            isMove = false;
+            rigid.gravityScale = 0f;
+            GameManager.instance.StartCoroutine("Die"); 
+            isDie = false;
+        }
+
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         hit = Physics2D.Raycast(mousePos, Vector2.zero);
 

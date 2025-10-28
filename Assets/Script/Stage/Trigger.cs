@@ -155,6 +155,11 @@ public class Trigger : MonoBehaviour
         else if (GameManager.instance.heart >= 1){
             GameManager.instance.StartCoroutine("TimeDown", 2f);
         }
+        else
+        {
+            GameManager.instance.player.isDie = true;
+            
+        }
 
         GameManager.instance.player.rigid.linearVelocity = Vector2.zero;
         GameManager.instance.player.moveInput = Vector2.zero;

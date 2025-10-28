@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public class GameManager : MonoBehaviour
     public bool isPerfect;
     public bool isTime;
     public bool isFinal;
+    public bool isDie;
     public float timeMagnification = 1f;
+
 
     [Header("Script")]
     public CinemachineCamera cinemachine;
@@ -58,13 +61,14 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
+        isDie = false;
         isPerfect = false;
         stageIndex = 0;
         stageColor = new Color(1f, 0.5f, 0.5f); // Red
         screenAlpha.alpha = 1f;
 
-        
         StartCoroutine(StartAlphaSet());
+
     }
 
     void Update()
@@ -72,6 +76,8 @@ public class GameManager : MonoBehaviour
         if (isTime) timeRemaining -= Time.deltaTime * timeMagnification;
         if (!isFinal) timeText.text = timeRemaining.ToString("F1");
         else timeText.text = "♥ : " + heart;
+
+        if (timeRemaining >= 500f) timeText.text = "0.0";
 
         // 최종 스테이지 퍼센트 계산
         if (finalPerTextAlpha.alpha >= 1f && player.transform.position.x >= finalChecker[0].transform.position.x)
@@ -87,6 +93,27 @@ public class GameManager : MonoBehaviour
 
             finalPerText.text = finalPerFloat.ToString("F1") + "%";
         }
+    }
+
+    public IEnumerator Die()
+    {
+        isDie = true;
+        AsyncOperation asyncOp;
+
+        asyncOp = SceneManager.LoadSceneAsync(1);
+        asyncOp.allowSceneActivation = false;
+
+        yield return new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < 150; i++)
+        {
+            screenAlpha.alpha += 0.01f;
+            timeText.alpha -= 0.01f;
+            keyGuideText.alpha -= 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        asyncOp.allowSceneActivation = true;
     }
 
     IEnumerator StartAlphaSet()
@@ -364,7 +391,7 @@ public class GameManager : MonoBehaviour
                 subSwitchText.text = "♥ = 10s";
                 break;
             case 3:
-                switchText.text = "보안 프로토콜 활성화.";
+                switchText.text = "보안 프로토콜 활성화";
                 subSwitchText.text = "x1.0";
                 break;
             default:
@@ -417,18 +444,18 @@ public class GameManager : MonoBehaviour
         string newText = string.Format(OriginalFormat, hexColorCode);
 
         restartText.text = newText;
-        while (player.isRestart)
+        while (player.isRestart && isDie == false)
         {
             restartText.alpha = 0.7f;
             for (int i = 0; i < 30; i++)
             {
-                if (!player.isRestart) break;
+                if (!player.isRestart || isDie == true) break;
                 restartText.alpha -= 0.015f;
                 yield return new WaitForSeconds(0.01f);
             }
             for (int i = 0; i < 30; i++)
             {
-                if (!player.isRestart) break;
+                if (!player.isRestart || isDie == true) break;
                 restartText.alpha += 0.015f;
                 yield return new WaitForSeconds(0.01f);
             }

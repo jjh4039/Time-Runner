@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DB : MonoBehaviour
 {
@@ -14,5 +15,7 @@ public class DB : MonoBehaviour
     {
         isBuy = new bool[7] { false, false, false, false, false, false, false };
         instance = this;
+
+        DontDestroyOnLoad(this);
     }
 }
