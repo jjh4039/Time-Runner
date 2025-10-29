@@ -15,6 +15,11 @@ public class Ending : MonoBehaviour
     public string[] playerInfo;
     public int playTime;
 
+    void FixedUpdate()
+    {
+        
+    }
+
     private void Start()
     {
         madeBy.alpha = 0f;
@@ -38,7 +43,7 @@ public class Ending : MonoBehaviour
         while (true)
         {
             backGroundSprite.transform.position += new Vector3(0, 0.0065f, 0);
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
@@ -88,7 +93,7 @@ public class Ending : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4f);
 
         for (int i = 0; i <= 100; i++)
         {
