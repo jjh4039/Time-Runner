@@ -151,9 +151,10 @@ public class GameManager : MonoBehaviour
     
     IEnumerator TimeDown(float downTime)
     {
-
         // 텍스트 생성 (Damage)
         if (!isFinal) Instantiate(minusPrefab[(int)downTime], new Vector2(UnityEngine.Random.Range(0f, 0f), 480f), Quaternion.identity).transform.SetParent(rectParent, false);
+
+        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Fall, 1f, 1f);
 
         // 시간 감소
         timeText.color = Color.red;

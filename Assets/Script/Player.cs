@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
             if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
-                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.9f, 1.1f);
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.7f, 1.5f);
             }
 
             // АјАн
@@ -208,6 +208,7 @@ public class Player : MonoBehaviour
         if (GameManager.instance.timeRemaining < 0f && !isDie)
         {
             isDie = true;
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Die, 0.5f, 0.6f);
             GameManager.instance.timeRemaining = 1000f;
         }
 
