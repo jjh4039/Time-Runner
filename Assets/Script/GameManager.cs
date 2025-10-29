@@ -388,6 +388,7 @@ public class GameManager : MonoBehaviour
             Instantiate(signPrefab, Vector2.zero, Quaternion.identity).transform.SetParent(rectParent, false);
             timeRemaining += 0.5f;
             db.perfectCount += 1;
+            db.perfectCountSave += 1;
             yield return new WaitForSeconds(0f);
         }
         isPerfect = true;

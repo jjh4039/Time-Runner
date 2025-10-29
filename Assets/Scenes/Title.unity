@@ -1383,6 +1383,7 @@ MonoBehaviour:
   titleText:
   - {fileID: 110486692}
   - {fileID: 268886924}
+  isWarp: 0
   selectIndex: 0
 --- !u!1 &2009210555
 GameObject:

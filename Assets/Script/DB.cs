@@ -7,8 +7,10 @@ public class DB : MonoBehaviour
 
     // 누적되는 전체 플레이 데이터
     [Header("Total Data")]
-    public int deathCount;
+    public float playTime; // 총 플레이 시간(초)
     public int perfectCount;
+    public int perfectCountSave;
+    public int clearCount;
     public bool[] isBuy;
 
     void Awake()
@@ -17,5 +19,10 @@ public class DB : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(this);
+    }
+
+    private void Update()
+    {
+        playTime += Time.deltaTime;
     }
 }
