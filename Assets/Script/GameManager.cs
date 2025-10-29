@@ -275,6 +275,7 @@ public class GameManager : MonoBehaviour
         if (stageManager.currentLevel == 2) titleText.color = new Color(0.3f, 0.5f, 1f, 0.2f); // 레벨3 임시
         titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
         timeGuideText.color = titleText.color;
+        
         switch (stageManager.currentLevel)
         {
             case 0: // 레벨1
@@ -391,6 +392,7 @@ public class GameManager : MonoBehaviour
             db.perfectCountSave += 1;
             yield return new WaitForSeconds(0f);
         }
+        db.clearCount += 1;
         isPerfect = true;
     }
 
