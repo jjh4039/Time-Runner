@@ -99,6 +99,7 @@ public class Player : MonoBehaviour
             if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.9f, 1.1f);
             }
 
             // АјАн
@@ -236,6 +237,16 @@ public class Player : MonoBehaviour
         {
             rigid.linearVelocity = rigid.linearVelocity = Vector2.zero;
             rigid.angularVelocity = 0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.ON, 0.8f, 1f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.OFF, 0.8f, 1f);
         }
     }
 

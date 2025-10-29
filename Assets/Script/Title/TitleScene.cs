@@ -34,6 +34,8 @@ public class TitleScene : MonoBehaviour
         asyncOp.allowSceneActivation = false;
         StartCoroutine(BGAlpha());
         StartCoroutine(StartEvent());
+
+        AudioMananger.instance.PlayBgm(true, 0.4f);
     }
 
     public void Update()
@@ -43,6 +45,7 @@ public class TitleScene : MonoBehaviour
             {
                 case 0:
                     StartCoroutine(GameStart());
+                    if (isWarp) AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 1.5f, 0.4f);
                     isWarp = false;
                     break;
                 case 1:
@@ -58,12 +61,14 @@ public class TitleScene : MonoBehaviour
         {
             selectIndex--;
             if (selectIndex < 0) selectIndex = selectTexts.Length - 1;
+            if (isWarp) AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
             Select();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             selectIndex++;
             if (selectIndex >= selectTexts.Length) selectIndex = 0;
+            if (isWarp) AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
             Select();
         }
     }
@@ -129,7 +134,7 @@ public class TitleScene : MonoBehaviour
             selectIndexText.color = new Color(selectIndexText.color.r, selectIndexText.color.g, selectIndexText.color.b, selectIndexText.color.a + 0.01f);
             guideText.color = new Color(guideText.color.r, guideText.color.g, guideText.color.b, guideText.color.a + 0.01f);
 
-            if (m == 100) isWarp = true;
+            if (m == 10) isWarp = true;
 
             yield return new WaitForSeconds(0.01f);
         }

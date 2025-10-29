@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartAlphaSet()
     {
+        AudioMananger.instance.PlayBgm(true, 0.2f);
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(SwitchAlpha(3));
         for (int i = 50; i > 0; i--)
