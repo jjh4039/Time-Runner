@@ -77,6 +77,9 @@ public class Trigger : MonoBehaviour
                 boxCollider2D.enabled = false;
                 break;
             case 7:
+                // 엔딩 트리거
+                GameManager.instance.StartCoroutine("Ending");
+                boxCollider2D.enabled = false;
                 break;
         }
     }

@@ -95,6 +95,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator Ending()
+    {
+        Time.timeScale = 0.6f;
+        AsyncOperation asyncOp;
+
+        asyncOp = SceneManager.LoadSceneAsync(3);
+        asyncOp.allowSceneActivation = false;
+
+        for (int i = 0; i < 100; i++)
+        {
+            screenAlpha.alpha += 0.01f;
+            timeText.alpha -= 0.01f;
+            keyGuideText.alpha -= 0.01f;
+            finalPerTextAlpha.alpha -= 0.01f;
+            yield return new WaitForSeconds(0.007f);
+        }
+
+        asyncOp.allowSceneActivation = true;
+    }
+
+
     public IEnumerator Die()
     {
         isDie = true;
