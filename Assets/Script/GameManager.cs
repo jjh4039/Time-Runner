@@ -277,8 +277,10 @@ public class GameManager : MonoBehaviour
     {
         string colorCode = ColorUtility.ToHtmlStringRGB(stageColor);
         titleText.color = stageColor;
+
         if (stageManager.currentLevel == 1) titleText.color = new Color(1f, 0.7f, 1f, 0.2f); // 레벨2 임시
         if (stageManager.currentLevel == 2) titleText.color = new Color(0.3f, 0.5f, 1f, 0.2f); // 레벨3 임시
+
         titleText.color = new Color(titleText.color.r, titleText.color.g,titleText.color.b, 0.2f);
         timeGuideText.color = titleText.color;
         

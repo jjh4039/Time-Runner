@@ -85,7 +85,6 @@ public class Ending : MonoBehaviour
                 else yield return new WaitForSeconds(0.1f);
             }
             AudioMananger.instance.sfxPlayers[tmp].Stop();
-            // 한 문장마다 0.8초씩 대기
             yield return new WaitForSeconds(0.8f);
         }
 
