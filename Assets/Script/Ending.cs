@@ -1,6 +1,7 @@
 using KoreanTyper;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,6 @@ public class Ending : MonoBehaviour
 
     public string[] playerInfo;
     public int playTime;
-
-    void FixedUpdate()
-    {
-        
-    }
 
     private void Start()
     {
@@ -57,15 +53,17 @@ public class Ending : MonoBehaviour
         for (int i = 0; i <= 100; i++)
         {
             screenAlpha.alpha -= 0.01f;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(0.03f);
+            if (i == 50) AudioMananger.instance.PlayBgm(true, 0.1f);
         }
-
+        
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(TypingText());
     }
 
     public IEnumerator TypingText()
     {
+
         string[] strings = new string[6]{ "Time-Runner",
                                               "제작기간 2개월",
                                               "PlayTime : " + playerInfo[0],
@@ -77,13 +75,17 @@ public class Ending : MonoBehaviour
         {
             int strTypingLength = strings[t].GetTypingLength();
 
+            int tmp = AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Typing, 0.8f, 1f);
+            AudioMananger.instance.sfxPlayers[tmp].loop = true;
+
             for (int i = 0; i <= strTypingLength; i++)
             {
                 Texts[t].text = strings[t].Typing(i);
                 if (i == 0) new WaitForSeconds(0.25f);
                 else yield return new WaitForSeconds(0.1f);
             }
-            // Wait 1 second per 1 sentence | 한 문장마다 1초씩 대기
+            AudioMananger.instance.sfxPlayers[tmp].Stop();
+            // 한 문장마다 0.8초씩 대기
             yield return new WaitForSeconds(0.8f);
         }
 
@@ -100,5 +102,7 @@ public class Ending : MonoBehaviour
             screenAlpha.alpha += 0.01f;
             yield return new WaitForSeconds(0.02f);
         }
+
+        AudioMananger.instance.StartCoroutine("QuitBGM");
     }
 }

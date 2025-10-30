@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
+using UnityEngine.Audio;
 
 public class Trigger : MonoBehaviour
 {
@@ -79,6 +80,7 @@ public class Trigger : MonoBehaviour
             case 7:
                 // 엔딩 트리거
                 GameManager.instance.StartCoroutine("Ending");
+                AudioMananger.instance.StartCoroutine("QuitBGM");
                 boxCollider2D.enabled = false;
                 break;
         }
@@ -95,13 +97,12 @@ public class Trigger : MonoBehaviour
                 GameManager.instance.timeRemaining -= 10f;
                 yield return new WaitForSeconds(0.05f);
                 GameManager.instance.timeText.color = Color.white;
-                // 사운드 ㄱㄱ
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Heart, 0.7f, 1f);
                 yield return new WaitForSeconds(0.2f);
             }
 
             else
             {
-                // 사운드2 ㄱㄱ
                 yield return new WaitForSeconds(0.35f);
                 GameManager.instance.isFinal = true;
             }        
@@ -189,6 +190,8 @@ public class Trigger : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
+        AudioMananger.instance.bgmPlayer.clip = AudioMananger.instance.bgmClip2;
+        AudioMananger.instance.PlayBgm(true, 0.3f);
         yield return new WaitForSeconds(1f);
 
        

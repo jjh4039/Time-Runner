@@ -106,6 +106,7 @@ public class Password : MonoBehaviour
                
                     // 일치하면 초록색 태그를 추가합니다.
                     newPasswordText += $"<color={correctColor}>{inputDigit}</color>";
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
                     DoorOpen(doorindex);
                 }
                 else

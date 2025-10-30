@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnityEngine;
+using System.Collections;
 
 public class AudioMananger : MonoBehaviour
 {
@@ -7,17 +8,18 @@ public class AudioMananger : MonoBehaviour
 
     [Header("#BGM")]
     public AudioClip bgmClip;
+    public AudioClip bgmClip2;
     public float bgmVolume;
-    AudioSource bgmPlayer;
+    public AudioSource bgmPlayer;
 
     [Header("#SFX")]
     public AudioClip[] sfxClips;
     public float sfxVolume;
     public int channels;
-    AudioSource[] sfxPlayers;
+    public AudioSource[] sfxPlayers;
     int channelIndex;
 
-    public enum Sfx { Select, Jump, Fall, Wire, ON, OFF, Sword, Teleport, Die, Zip, Buy, NoBuy, Typing }
+    public enum Sfx { Select, Jump, Fall, Wire, ON, OFF, Sword, Teleport, Die, Zip, Buy, NoBuy, Typing, LevelUp, Heart, Start }
 
     void Awake()
     {
@@ -54,17 +56,20 @@ public class AudioMananger : MonoBehaviour
     public void PlayBgm(bool isPlay, float Volume)
     {
         if (isPlay)
+        {
+            bgmPlayer.volume = Volume;
             bgmPlayer.Play();
+        }
         else
             bgmPlayer.Stop();
     }
 
-    public void PlaySfx(Sfx sfx, float Volume, float Pitch)
+    public int PlaySfx(Sfx sfx, float Volume, float Pitch)
     {
         for (int index = 0; index <sfxPlayers.Length; index++)
         {
             int loopIndex = (index + channelIndex) % sfxPlayers.Length;
-        
+
             if (sfxPlayers[loopIndex].isPlaying)
             {
                 continue;
@@ -75,7 +80,19 @@ public class AudioMananger : MonoBehaviour
             sfxPlayers[loopIndex].volume = Volume;
             sfxPlayers[loopIndex].pitch = Pitch;
             sfxPlayers[loopIndex].Play();
-            break;
+
+            return loopIndex;          
         }
+        return 0;
+    }
+
+    public IEnumerator QuitBGM()
+    {
+        while (bgmPlayer.volume > 0)
+        {
+            bgmPlayer.volume -= 0.01f;
+            yield return new WaitForSeconds(0.03f);
+        }
+        bgmPlayer.Stop();
     }
 }

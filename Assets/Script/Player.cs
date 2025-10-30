@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public Vector2 mousePos;
     public RaycastHit2D hit;
 
+    public int myZip;
     public bool isMove;
     public Vector2 moveInput;
     public float[] attackAmount;
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour
             joint.enabled = false;
             rigid.gravityScale = 2.5f;
 
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.4f, 2f);
             rigid.linearVelocity = new Vector2(rigid.linearVelocity.x / 1.5f, rigid.linearVelocity.y);
             connectedAnchor.isWire = false; // 와이어 light 및 회전 해제 
         }
@@ -88,6 +90,8 @@ public class Player : MonoBehaviour
         if (context.performed && isZip == true)
         {
             zipLine.nowStop = true;
+            AudioMananger.instance.sfxPlayers[myZip].Stop();
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.4f, 2f);
             GameManager.instance.StartCoroutine("ZipLineCameraOffset", false);
             speed = 9f;
         }
@@ -99,7 +103,7 @@ public class Player : MonoBehaviour
             if (context.performed && isGrounded && playerSpaceMode == PlayerSpaceMode.jump)
             {
                 rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpForce);
-                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.7f, 1.5f);
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.4f, 2f);
             }
 
             // 공격
@@ -108,6 +112,7 @@ public class Player : MonoBehaviour
                 if (attackAmount[0] <= 0 && attackAmount[1] <= 0 && attackAmount[2] <= 0)
                 {
                     animator.SetInteger("Attack", 1);
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Sword, 0.5f, 1.4f);
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 1);
                     attackAmount[0] = 0.5f; // 공격 쿨타임 설정
                 }
@@ -115,6 +120,7 @@ public class Player : MonoBehaviour
                 {
                     animator.SetInteger("Attack", 2);
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 2);
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Sword, 0.5f, 1.7f);
                     attackAmount[0] = 0f;
                     attackAmount[1] = 0.45f; // 공격 쿨타임 설정
                 }
@@ -122,6 +128,7 @@ public class Player : MonoBehaviour
                 {
                     animator.SetInteger("Attack", 3);
                     GameManager.instance.StartCoroutine("AttackCameraZoom", 3);
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Sword, 0.5f, 2f);
                     attackAmount[0] = 0f;
                     attackAmount[1] = 0f;
                     attackAmount[2] = 0.7f; // 공격 쿨타임 설정
@@ -138,6 +145,7 @@ public class Player : MonoBehaviour
             {
                 connectedGate.isShiftable = false;
                 connectedGate.StartCoroutine("Shift");
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Teleport, 0.4f, 1.4f);
             }
         }
     }
@@ -149,6 +157,8 @@ public class Player : MonoBehaviour
             // 만약 클릭한 오브젝트가 'GrapplePoint' 태그를 가지고 있다면
             if (hit.collider != null && hit.collider.CompareTag("GrapplePoint"))
             {
+                AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Wire, 0.8f, 1f);
+
                 connectedAnchor = hit.collider.GetComponent<Anchor>();
                 connectedAnchor.isWire = true; // 와이어 light 및 회전 설정
                 rigid.gravityScale = 10f; // 와이어 연결 시 중력 증가
@@ -183,6 +193,7 @@ public class Player : MonoBehaviour
                 if (GameManager.instance.password.myPasswordText.text.Length < 4)
                 {
                     GameManager.instance.password.myPasswordText.text += number.ToString();
+                    
                 }
             }
             else
@@ -195,6 +206,7 @@ public class Player : MonoBehaviour
                     if (GameManager.instance.password.myPasswordText.text.Length < 4)
                     {
                         GameManager.instance.password.myPasswordText.text += number.ToString();
+                        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 1f, 1.5f);
                     }
                 }
             }
@@ -208,12 +220,12 @@ public class Player : MonoBehaviour
         if (GameManager.instance.timeRemaining < 0f && !isDie)
         {
             isDie = true;
-            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Die, 0.5f, 0.6f);
             GameManager.instance.timeRemaining = 1000f;
         }
 
         if (isDie)
-        {
+        { 
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Die, 0.5f, 0.6f);
             animator.SetBool("Die", true);
             rigid.linearVelocity = Vector2.zero;
             rigid.angularVelocity = 0f;

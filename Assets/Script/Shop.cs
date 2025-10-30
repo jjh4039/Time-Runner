@@ -73,10 +73,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             readyText.text = "[ D ] 키를 눌러 출발하세요 - ■ ■ ■";
         }
-        else if (readying <= 500)
+        else if (readying <= 450)
         {
             readyText.color = Color.white;
             readyText.text = "출발합니다.";
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1.5f);
+            AudioMananger.instance.StartCoroutine("QuitBGM");
             readying = 3000f;
             StartCoroutine(GameStart());
         }
@@ -109,12 +111,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             skillIndexV--;
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
             if (skillIndexV < 0)
                 skillIndexV = 3;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             skillIndexV++;
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
             if (skillIndexV > 3)
                 skillIndexV = 0;
         }
@@ -126,6 +130,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 if (skillIndexH > 0)
                 {
                     skillIndexH--;
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.7f, 1f);
                 }
             }
         }
@@ -136,6 +141,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 if (skillIndexH < 1)
                 {
                     skillIndexH++;
+                    AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 0.6f, 1f);
                 }
             }
         }
@@ -143,6 +149,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     IEnumerator ShopStart()
     {
+        AudioMananger.instance.PlayBgm(true, 0.1f);
         alphaScreen.alpha = 1f;
         for (int i = 0; i < 40; i++)
         {
@@ -264,6 +271,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             DB.instance.perfectCount -= buyCost[selectIndex];
             DB.instance.isBuy[selectIndex] = true;
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Buy, 0.4f, 1f);
+        }
+
+        else
+        {
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.NoBuy, 0.3f, 1f);
         }
     }
 }

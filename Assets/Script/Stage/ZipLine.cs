@@ -49,7 +49,10 @@ public class ZipLine : MonoBehaviour
 
     IEnumerator MoveZipLine()
     {
+        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Wire, 0.9f, 1f);
         GameManager.instance.StartCoroutine("ZipLineCameraOffset", true);
+        int myZip = AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Zip, 0.2f, 2f);
+        GameManager.instance.player.myZip = myZip;
         nowStop = false;
         light2D.enabled = true;
         GameManager.instance.player.speed = 12f;
@@ -94,6 +97,8 @@ public class ZipLine : MonoBehaviour
         {
             zip.transform.position = new Vector3(endPos.position.x, endPos.position.y - 0.6f, endPos.position.z);
             GameManager.instance.player.rigid.linearVelocity = new Vector2(GameManager.instance.player.rigid.linearVelocity.x, GameManager.instance.player.jumpForce + 0.1f); // ¿”Ω√ §∑§µ§∑
+            AudioMananger.instance.sfxPlayers[myZip].Stop();
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Jump, 0.4f, 2f);
             GameManager.instance.StartCoroutine("ZipLineCameraOffset", false);
         }
     }

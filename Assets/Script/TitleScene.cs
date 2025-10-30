@@ -35,7 +35,7 @@ public class TitleScene : MonoBehaviour
         StartCoroutine(BGAlpha());
         StartCoroutine(StartEvent());
 
-        AudioMananger.instance.PlayBgm(true, 0.4f);
+        AudioMananger.instance.PlayBgm(true, 0.3f);
     }
 
     public void Update()
@@ -45,7 +45,7 @@ public class TitleScene : MonoBehaviour
             {
                 case 0:
                     StartCoroutine(GameStart());
-                    if (isWarp) AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 1.5f, 0.4f);
+                    if (isWarp) AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Select, 1.5f, 0.5f);
                     isWarp = false;
                     break;
                 case 1:
@@ -76,6 +76,7 @@ public class TitleScene : MonoBehaviour
     IEnumerator GameStart()
     {
         alphaScreen.alpha = 0f;
+        AudioMananger.instance.StartCoroutine("QuitBGM");
 
         for (int i = 0; i < 40; i++)
         {
@@ -132,7 +133,7 @@ public class TitleScene : MonoBehaviour
             selectTexts[1].color = new Color(selectTexts[1].color.r, selectTexts[1].color.g, selectTexts[1].color.b, selectTexts[1].color.a + 0.0075f);
             selectTexts[2].color = new Color(selectTexts[2].color.r, selectTexts[2].color.g, selectTexts[2].color.b, selectTexts[2].color.a + 0.005f);
             selectIndexText.color = new Color(selectIndexText.color.r, selectIndexText.color.g, selectIndexText.color.b, selectIndexText.color.a + 0.01f);
-            guideText.color = new Color(guideText.color.r, guideText.color.g, guideText.color.b, guideText.color.a + 0.01f);
+            guideText.color = new Color(guideText.color.r, guideText.color.g, guideText.color.b, guideText.color.a + 0.0025f);
 
             if (m == 10) isWarp = true;
 

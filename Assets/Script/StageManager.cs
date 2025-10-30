@@ -55,7 +55,8 @@ public class StageManager : MonoBehaviour
         GameObject newStage;
       
         // SwitchLevel 스테이지 생성 ( m / n / n + 4 )
-        if (stageCount == 8 || stageCount == 14 || stageCount == 18) 
+        // 8 14 18
+        if (stageCount == 1 || stageCount == 3 || stageCount == 5) 
         {
             GameManager.instance.isTime = false;
             GameManager.instance.keyGuideText.text = "";
@@ -76,6 +77,8 @@ public class StageManager : MonoBehaviour
                 case 2:
                     newStage = Instantiate(switchLevelStagePrefabs[2], nextSpawnPoint, Quaternion.identity);
                     GameManager.instance.StartCoroutine("SwitchAlpha", 2);
+                    AudioMananger.instance.bgmPlayer.pitch = 1f;
+                    AudioMananger.instance.StartCoroutine("QuitBGM");
                     GameManager.instance.timeMagnification = 1f;
                     GameManager.instance.player.lineRenderer.sharedMaterial = GameManager.instance.player.lineMaterials[3];
                     break;
@@ -84,6 +87,7 @@ public class StageManager : MonoBehaviour
                     break;
             }
             recentNumbers.Clear();
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.LevelUp, 0.5f, 0.8f + 0.1f * currentLevel);
 
             newStage.tag = "Stage" + stageCount;
             Transform endOfStage = newStage.transform.Find("EndOfStage");
@@ -96,6 +100,7 @@ public class StageManager : MonoBehaviour
         else // 스테이지 생성
         {
             GameManager.instance.isTime = true;
+            AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Start, 0.35f, 1.1f + 0.1f * currentLevel);
             int randomIndex = Random.Range(0, stageArray[currentLevel].stages.Length);
 
                     while (recentNumbers.Contains(randomIndex))

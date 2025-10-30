@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour
         screenAlpha.alpha = 1f;
 
         StartCoroutine(StartAlphaSet());
-
     }
 
     void Update()
@@ -112,6 +111,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.007f);
         }
 
+        yield return new WaitForSeconds(0.5f);
+
         asyncOp.allowSceneActivation = true;
     }
 
@@ -125,6 +126,8 @@ public class GameManager : MonoBehaviour
         asyncOp.allowSceneActivation = false;
 
         yield return new WaitForSeconds(0.1f);
+
+        AudioMananger.instance.StartCoroutine("QuitBGM");
 
         for (int i = 0; i < 150; i++)
         {
@@ -154,7 +157,7 @@ public class GameManager : MonoBehaviour
         // 텍스트 생성 (Damage)
         if (!isFinal) Instantiate(minusPrefab[(int)downTime], new Vector2(UnityEngine.Random.Range(0f, 0f), 480f), Quaternion.identity).transform.SetParent(rectParent, false);
 
-        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Fall, 1f, 1f);
+        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Fall, 0.8f, 1f);
 
         // 시간 감소
         timeText.color = Color.red;
@@ -167,6 +170,7 @@ public class GameManager : MonoBehaviour
         else
         {
             GameManager.instance.heart -= 1;
+            yield return new WaitForSeconds(0.1f);
         }
         timeText.color = Color.white;
     }

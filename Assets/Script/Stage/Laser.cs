@@ -25,6 +25,7 @@ public class Laser : MonoBehaviour
 
     IEnumerator SummonArrow()
     {
+        AudioMananger.instance.PlaySfx(AudioMananger.Sfx.Heart, 0.9f, 2f);
         Instantiate(arrowPrefab, new Vector3(transform.position.x + 34f, transform.position.y, 0), Quaternion.Euler(0, 0, 0)).transform.parent = this.transform;
         for (int i = 0; i < 10; i++)
         {
